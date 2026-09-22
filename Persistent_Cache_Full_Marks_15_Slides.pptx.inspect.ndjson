@@ -1,0 +1,452 @@
+f{"kind":"deck","id":"pr/2vahfi","name":"Deck"}
+{"kind":"layout","layoutId":"720d5e94-cc69-48fe-a979-6e4176c6161e","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"d143ff40-a1bb-4f16-9dc0-bafaaa694eeb","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/vyorux","slide":1,"title":"SYSTEM OVERVIEW","textShapes":10}
+{"kind":"shape","id":"sh/p0vq583u","slide":1,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/2d47utk3","slide":1,"text":"SYSTEM OVERVIEW","textPreview":"SYSTEM OVERVIEW","textChars":15,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/3ed83ylo","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/d4fq983q","slide":1,"text":"PERSISTENT MEMORY CACHE","textPreview":"PERSISTENT MEMORY CACHE","textChars":23,"textLines":1,"bbox":[64,56,490,34]}
+{"kind":"textbox","id":"sh/q14rytkf","slide":1,"text":"Can a cache\nsurvive its\nown crash?","textPreview":"Can a cache | survive its | own crash?","textChars":34,"textLines":3,"bbox":[64,112,520,250]}
+{"kind":"textbox","id":"sh/r2d87ylk","slide":1,"text":"Fast in RAM. Durable on disk.","textPreview":"Fast in RAM. Durable on disk.","textChars":29,"textLines":1,"bbox":[68,382,500,40]}
+{"kind":"shape","id":"sh/07694n2h","slide":1,"bbox":[68,444,470,0]}
+{"kind":"textbox","id":"sh/18fqdsj2","slide":1,"text":"WAL  •  LRU/LFU  •  TRANSACTIONS  •  B-TREE","textPreview":"WAL  •  LRU/LFU  •  TRANSACTIONS  •  B-TREE","textChars":43,"textLines":1,"bbox":[68,462,505,32]}
+{"kind":"textbox","id":"sh/xsjix0zq","slide":1,"text":"Jay Umesh Shinde  •  Sanchit Gaikwad  •  Nikhil Shelar","textPreview":"Jay Umesh Shinde  •  Sanchit Gaikwad  •  Nikhil Shelar","textChars":54,"textLines":1,"bbox":[68,530,520,44]}
+{"kind":"textbox","id":"sh/crah4vi5","slide":1,"text":"Sardar Patel Institute of Technology","textPreview":"Sardar Patel Institute of Technology","textChars":36,"textLines":1,"bbox":[68,574,500,28]}
+{"kind":"textbox","id":"sh/bqh0vqhk","slide":1,"text":"JAY","textPreview":"JAY","textChars":3,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/ap8z2l0z","slide":1,"text":"//  1 OF 5","textPreview":"//  1 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"image","id":"im/dwb2d876","slide":1,"name":"","geometry":"roundRect","alt":"3D persistent cache connected to a durable storage vault","bbox":[610,48,624,560]}
+{"kind":"notes","id":"nt/vyorux","slide":1,"text":"Open with the question on screen, then answer it: yes—by recording durable intent before changing RAM. Introduce the team and the four mechanisms. The hero artwork is an original AI-generated visual created for this deck.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/36f4yf","slide":2,"title":"PROBLEM → SOLUTION","textShapes":21}
+{"kind":"shape","id":"sh/apkbe5k3","slide":2,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/xsbup0ju","slide":2,"text":"PROBLEM → SOLUTION","textPreview":"PROBLEM → SOLUTION","textChars":18,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/cr2tgv29","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/nmtcjq1c","slide":2,"text":"WHY THIS PROJECT EXISTS","textPreview":"WHY THIS PROJECT EXISTS","textChars":23,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/210balk7","slide":2,"text":"One crash exposes the weakness of RAM","textPreview":"One crash exposes the weakness of RAM","textChars":37,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/pobul0ji","slide":2,"bbox":[64,172,520,420]}
+{"kind":"textbox","id":"sh/on2tcv2x","slide":2,"text":"VOLATILE","textPreview":"VOLATILE","textChars":8,"textLines":1,"bbox":[96,198,250,32]}
+{"kind":"textbox","id":"sh/fy9sf6lg","slide":2,"text":"₹10,000","textPreview":"₹10,000","textChars":7,"textLines":1,"bbox":[96,252,360,62]}
+{"kind":"textbox","id":"sh/ex0b6lkv","slide":2,"text":"↓ withdraw ₹5,000","textPreview":"↓ withdraw ₹5,000","textChars":17,"textLines":1,"bbox":[96,318,340,36]}
+{"kind":"textbox","id":"sh/wjadsb6t","slide":2,"text":"₹5,000","textPreview":"₹5,000","textChars":6,"textLines":1,"bbox":[96,360,360,62]}
+{"kind":"shape","id":"sh/xkjelg7e","slide":2,"bbox":[96,438,420,0]}
+{"kind":"textbox","id":"sh/ahsvqlo3","slide":2,"text":"POWER OFF","textPreview":"POWER OFF","textChars":9,"textLines":1,"bbox":[96,458,240,40]}
+{"kind":"textbox","id":"sh/vi1wjqpo","slide":2,"text":"RAM state disappears","textPreview":"RAM state disappears","textChars":20,"textLines":1,"bbox":[96,510,360,28]}
+{"kind":"textbox","id":"sh/8fqdob6x","slide":2,"text":"✕ acknowledged write","textPreview":"✕ acknowledged write","textChars":20,"textLines":1,"bbox":[96,548,350,28]}
+{"kind":"shape","id":"sh/9gjuhg7i","slide":2,"bbox":[634,172,582,420]}
+{"kind":"textbox","id":"sh/md8vm1or","slide":2,"text":"DURABLE","textPreview":"DURABLE","textChars":7,"textLines":1,"bbox":[670,198,250,32]}
+{"kind":"shape","id":"sh/nehcf6pc","slide":2,"bbox":[666,260,74,74]}
+{"kind":"textbox","id":"sh/sbud0v61","slide":2,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[676,270,54,54]}
+{"kind":"textbox","id":"sh/tc3et07m","slide":2,"text":"WRITE TO WAL","textPreview":"WRITE TO WAL","textChars":12,"textLines":1,"bbox":[766,264,360,44]}
+{"kind":"textbox","id":"sh/1gzmxgbu","slide":2,"text":"force record to disk","textPreview":"force record to disk","textChars":20,"textLines":1,"bbox":[766,308,360,28]}
+{"kind":"shape","id":"sh/gf65obu9","slide":2,"bbox":[666,374,74,74]}
+{"kind":"textbox","id":"sh/fux4v6do","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[676,384,54,54]}
+{"kind":"textbox","id":"sh/eto3m1c3","slide":2,"text":"UPDATE MEMORY","textPreview":"UPDATE MEMORY","textChars":13,"textLines":1,"bbox":[766,378,370,44]}
+{"kind":"textbox","id":"sh/tsfmtwvi","slide":2,"text":"return success last","textPreview":"return success last","textChars":19,"textLines":1,"bbox":[766,422,360,28]}
+{"kind":"shape","id":"sh/sr6lkrux","slide":2,"bbox":[670,508,260,32]}
+{"kind":"textbox","id":"sh/7qx4rmdc","slide":2,"text":"RESTART = REPLAY","textPreview":"RESTART = REPLAY","textChars":16,"textLines":1,"bbox":[680,509,240,29]}
+{"kind":"textbox","id":"sh/6po3ihc7","slide":2,"text":"JAY","textPreview":"JAY","textChars":3,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/5ovmpwvm","slide":2,"text":"//  2 OF 5","textPreview":"//  2 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/36f4yf","slide":2,"text":"Use the account example. The red side shows why memory alone is unsafe. The green side shows the exact ordering that makes the same operation recoverable.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/udjhzb","slide":3,"title":"WRITE PATH","textShapes":21}
+{"kind":"shape","id":"sh/fy98zilk","slide":3,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/gz2983mp","slide":3,"text":"WRITE PATH","textPreview":"WRITE PATH","textChars":10,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/10bq183a","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/690r2t4n","slide":3,"text":"SYSTEM ARCHITECTURE","textPreview":"SYSTEM ARCHITECTURE","textChars":19,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/ra98vyl8","slide":3,"text":"Every command follows one controlled path","textPreview":"Every command follows one controlled path","textChars":41,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/svi943mt","slide":3,"bbox":[72,262,210,150]}
+{"kind":"shape","id":"sh/twrqx83e","slide":3,"bbox":[354,262,210,150]}
+{"kind":"shape","id":"sh/i5g7yt4r","slide":3,"bbox":[636,262,210,150]}
+{"kind":"shape","id":"sh/j6p8re5c","slide":3,"bbox":[918,262,210,150]}
+{"kind":"shape","id":"sh/ze14zm1g","slide":3,"bbox":[282,337,72,0]}
+{"kind":"shape","id":"sh/ed8n6hkv","slide":3,"bbox":[564,337,72,0]}
+{"kind":"shape","id":"sh/1gj61wj6","slide":3,"bbox":[846,337,72,0]}
+{"kind":"textbox","id":"sh/0fa58r21","slide":3,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[92,280,50,26]}
+{"kind":"textbox","id":"sh/n21o361c","slide":3,"text":"CLI","textPreview":"CLI","textChars":3,"textLines":1,"bbox":[92,316,170,38]}
+{"kind":"textbox","id":"sh/mhsna1kr","slide":3,"text":"parse command","textPreview":"parse command","textChars":13,"textLines":1,"bbox":[92,365,170,25]}
+{"kind":"textbox","id":"sh/94j65wji","slide":3,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[374,280,50,26]}
+{"kind":"textbox","id":"sh/o3a5cr2x","slide":3,"text":"WAL","textPreview":"WAL","textChars":3,"textLines":1,"bbox":[374,316,170,38]}
+{"kind":"textbox","id":"sh/3mx4r218","slide":3,"text":"sync to disk","textPreview":"sync to disk","textChars":12,"textLines":1,"bbox":[374,365,170,25]}
+{"kind":"textbox","id":"sh/ilonyxkn","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[656,280,50,26]}
+{"kind":"textbox","id":"sh/61w7654b","slide":3,"text":"CACHE","textPreview":"CACHE","textChars":5,"textLines":1,"bbox":[656,316,170,38]}
+{"kind":"textbox","id":"sh/7258falw","slide":3,"text":"O(1) state","textPreview":"O(1) state","textChars":10,"textLines":1,"bbox":[656,365,170,25]}
+{"kind":"textbox","id":"sh/83e98fm1","slide":3,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[938,280,50,26]}
+{"kind":"textbox","id":"sh/t4nqhk3m","slide":3,"text":"B-TREE","textPreview":"B-TREE","textChars":6,"textLines":1,"bbox":[938,316,170,38]}
+{"kind":"textbox","id":"sh/yxc7254z","slide":3,"text":"ordered index","textPreview":"ordered index","textChars":13,"textLines":1,"bbox":[938,365,170,25]}
+{"kind":"textbox","id":"sh/jy58bqlk","slide":3,"text":"DISK FIRST","textPreview":"DISK FIRST","textChars":10,"textLines":1,"bbox":[354,438,210,34]}
+{"kind":"textbox","id":"sh/kzep4vm5","slide":3,"text":"MEMORY SECOND","textPreview":"MEMORY SECOND","textChars":13,"textLines":1,"bbox":[636,438,210,34]}
+{"kind":"shape","id":"sh/l0nqd03q","slide":3,"bbox":[270,508,660,70]}
+{"kind":"textbox","id":"sh/a9c7yl43","slide":3,"text":"ACKNOWLEDGE ONLY AFTER THE WAL RECORD IS DURABLE","textPreview":"ACKNOWLEDGE ONLY AFTER THE WAL RECORD IS DURABLE","textChars":48,"textLines":1,"bbox":[298,523,604,40]}
+{"kind":"textbox","id":"sh/bal87qlo","slide":3,"text":"JAY","textPreview":"JAY","textChars":3,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/dobadon6","slide":3,"text":"//  3 OF 5","textPreview":"//  3 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/udjhzb","slide":3,"text":"Walk the audience left to right. The crucial transition is WAL before cache. The B-tree is updated alongside memory so range queries remain consistent.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/g5v9ge","slide":4,"title":"CRASH RECOVERY","textShapes":30}
+{"kind":"shape","id":"sh/5o3edcj6","slide":4,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/ilsv2h0v","slide":4,"text":"CRASH RECOVERY","textPreview":"CRASH RECOVERY","textChars":14,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/jmlwb21g","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/srud8rix","slide":4,"text":"RECOVERY LOGIC","textPreview":"RECOVERY LOGIC","textChars":14,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/ts3ehwji","slide":4,"text":"The commit marker decides what survives","textPreview":"The commit marker decides what survives","textChars":39,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"textbox","id":"sh/6pcv6h0r","slide":4,"text":"cache.wal","textPreview":"cache.wal","textChars":9,"textLines":1,"bbox":[72,176,240,28]}
+{"kind":"shape","id":"sh/7qlwfm1c","slide":4,"bbox":[72,218,820,46]}
+{"kind":"textbox","id":"sh/8vadwnit","slide":4,"text":"001","textPreview":"001","textChars":3,"textLines":1,"bbox":[90,223,55,34]}
+{"kind":"textbox","id":"sh/9wju5sjy","slide":4,"text":"SET  balance  10000","textPreview":"SET  balance  10000","textChars":19,"textLines":1,"bbox":[158,223,550,34]}
+{"kind":"textbox","id":"sh/lczi58z6","slide":4,"text":"REPLAY","textPreview":"REPLAY","textChars":6,"textLines":1,"bbox":[736,223,130,34]}
+{"kind":"shape","id":"sh/krqhc3il","slide":4,"bbox":[72,280,820,46]}
+{"kind":"textbox","id":"sh/jqh03yh0","slide":4,"text":"002","textPreview":"002","textChars":3,"textLines":1,"bbox":[90,285,55,34]}
+{"kind":"textbox","id":"sh/yp8zad0f","slide":4,"text":"BEGIN  TX-7","textPreview":"BEGIN  TX-7","textChars":11,"textLines":1,"bbox":[158,285,550,34]}
+{"kind":"textbox","id":"sh/tgji9sz2","slide":4,"text":"SCAN","textPreview":"SCAN","textChars":4,"textLines":1,"bbox":[736,285,130,34]}
+{"kind":"shape","id":"sh/8fa1gnih","slide":4,"bbox":[72,342,820,46]}
+{"kind":"textbox","id":"sh/7eh07ihw","slide":4,"text":"003","textPreview":"003","textChars":3,"textLines":1,"bbox":[90,347,55,34]}
+{"kind":"textbox","id":"sh/6d8zed0b","slide":4,"text":"TX_SET  balance  5000","textPreview":"TX_SET  balance  5000","textChars":21,"textLines":1,"bbox":[158,347,550,34]}
+{"kind":"textbox","id":"sh/hkjidszy","slide":4,"text":"BUFFER","textPreview":"BUFFER","textChars":6,"textLines":1,"bbox":[736,347,130,34]}
+{"kind":"shape","id":"sh/gja1knit","slide":4,"bbox":[72,404,820,46]}
+{"kind":"textbox","id":"sh/gnilgbqp","slide":4,"text":"004","textPreview":"004","textChars":3,"textLines":1,"bbox":[90,409,55,34]}
+{"kind":"textbox","id":"sh/1or29g7a","slide":4,"text":"TX_SET  receipt  yes","textPreview":"TX_SET  receipt  yes","textChars":20,"textLines":1,"bbox":[158,409,550,34]}
+{"kind":"textbox","id":"sh/el03e18j","slide":4,"text":"BUFFER","textPreview":"BUFFER","textChars":6,"textLines":1,"bbox":[736,409,130,34]}
+{"kind":"shape","id":"sh/fm9k76p4","slide":4,"bbox":[72,466,820,46]}
+{"kind":"textbox","id":"sh/or2lkb61","slide":4,"text":"005","textPreview":"005","textChars":3,"textLines":1,"bbox":[90,471,55,34]}
+{"kind":"textbox","id":"sh/psb2dg7m","slide":4,"text":"COMMIT  TX-7","textPreview":"COMMIT  TX-7","textChars":12,"textLines":1,"bbox":[158,471,550,34]}
+{"kind":"textbox","id":"sh/2p03i18v","slide":4,"text":"REPLAY","textPreview":"REPLAY","textChars":6,"textLines":1,"bbox":[736,471,130,34]}
+{"kind":"shape","id":"sh/3qtkb6pg","slide":4,"bbox":[72,528,820,46]}
+{"kind":"textbox","id":"sh/4vy18rqh","slide":4,"text":"006","textPreview":"006","textChars":3,"textLines":1,"bbox":[90,533,55,34]}
+{"kind":"textbox","id":"sh/5w721c72","slide":4,"text":"BEGIN  TX-8  … crash","textPreview":"BEGIN  TX-8  … crash","textChars":20,"textLines":1,"bbox":[158,533,550,34]}
+{"kind":"textbox","id":"sh/7mxw3edw","slide":4,"text":"IGNORE","textPreview":"IGNORE","textChars":6,"textLines":1,"bbox":[736,533,130,34]}
+{"kind":"shape","id":"sh/6lofu9wb","slide":4,"bbox":[940,218,276,356]}
+{"kind":"textbox","id":"sh/toze5ov2","slide":4,"text":"RECOVERY","textPreview":"RECOVERY","textChars":8,"textLines":1,"bbox":[968,244,220,30]}
+{"kind":"textbox","id":"sh/8nqxwjuh","slide":4,"text":"✓ standalone writes","textPreview":"✓ standalone writes","textChars":19,"textLines":1,"bbox":[968,306,220,28]}
+{"kind":"textbox","id":"sh/jyxwzed0","slide":4,"text":"✓ committed TX","textPreview":"✓ committed TX","textChars":14,"textLines":1,"bbox":[968,354,220,28]}
+{"kind":"textbox","id":"sh/yxovq9wf","slide":4,"text":"× incomplete TX","textPreview":"× incomplete TX","textChars":15,"textLines":1,"bbox":[968,402,220,28]}
+{"kind":"shape","id":"sh/lkfe14vq","slide":4,"bbox":[968,462,212,0]}
+{"kind":"textbox","id":"sh/kz6dsje5","slide":4,"text":"0 partial changes","textPreview":"0 partial changes","textChars":17,"textLines":1,"bbox":[968,486,220,56]}
+{"kind":"textbox","id":"sh/budwvudo","slide":4,"text":"JAY","textPreview":"JAY","textChars":3,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/at4vmpw3","slide":4,"text":"//  4 OF 5","textPreview":"//  4 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/g5v9ge","slide":4,"text":"Explain that recovery scans the log, identifies committed transaction IDs, then replays standalone writes and committed transaction operations. TX-8 is ignored because no COMMIT exists.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/xzws2t","slide":5,"title":"EVALUATION MAP","textShapes":16}
+{"kind":"shape","id":"sh/k32907mh","slide":5,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/z2t872lw","slide":5,"text":"EVALUATION MAP","textPreview":"EVALUATION MAP","textChars":14,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/y1kryx4r","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/9svadc3e","slide":5,"text":"WHAT THE EVALUATOR CAN VERIFY","textPreview":"WHAT THE EVALUATOR CAN VERIFY","textChars":29,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/872947mt","slide":5,"text":"Four claims. Four pieces of proof.","textPreview":"Four claims. Four pieces of proof.","textChars":34,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/76t8b2l8","slide":5,"bbox":[548,282,184,184]}
+{"kind":"shape","id":"sh/m5kr2x4n","slide":5,"bbox":[566,300,148,148]}
+{"kind":"textbox","id":"sh/pwrq183u","slide":5,"text":"FULL\nSYSTEM","textPreview":"FULL | SYSTEM","textChars":11,"textLines":2,"bbox":[576,310,128,128]}
+{"kind":"shape","id":"sh/obi9snm9","slide":5,"bbox":[126,194,314,112]}
+{"kind":"textbox","id":"sh/25ojy1sb","slide":5,"text":"FAST","textPreview":"FAST","textChars":4,"textLines":1,"bbox":[148,210,270,34]}
+{"kind":"textbox","id":"sh/36xk76tw","slide":5,"text":"O(1) cache ops","textPreview":"O(1) cache ops","textChars":14,"textLines":1,"bbox":[148,250,270,30]}
+{"kind":"shape","id":"sh/47610bah","slide":5,"bbox":[840,194,314,112]}
+{"kind":"textbox","id":"sh/p8f2tgb2","slide":5,"text":"DURABLE","textPreview":"DURABLE","textChars":7,"textLines":1,"bbox":[862,210,270,34]}
+{"kind":"textbox","id":"sh/qtoj2ls7","slide":5,"text":"WAL + recovery","textPreview":"WAL + recovery","textChars":14,"textLines":1,"bbox":[862,250,270,30]}
+{"kind":"shape","id":"sh/ruhkvqts","slide":5,"bbox":[126,446,314,112]}
+{"kind":"textbox","id":"sh/cvq14bad","slide":5,"text":"ATOMIC","textPreview":"ATOMIC","textChars":6,"textLines":1,"bbox":[148,462,270,34]}
+{"kind":"textbox","id":"sh/dwz2xgby","slide":5,"text":"commit or rollback","textPreview":"commit or rollback","textChars":18,"textLines":1,"bbox":[148,502,270,30]}
+{"kind":"shape","id":"sh/ex836lsj","slide":5,"bbox":[840,446,314,112]}
+{"kind":"textbox","id":"sh/zyhkzqt4","slide":5,"text":"QUERYABLE","textPreview":"QUERYABLE","textChars":9,"textLines":1,"bbox":[862,462,270,34]}
+{"kind":"textbox","id":"sh/b210nqpc","slide":5,"text":"B-tree ranges","textPreview":"B-tree ranges","textChars":13,"textLines":1,"bbox":[862,502,270,30]}
+{"kind":"shape","id":"sh/a1sjul8r","slide":5,"bbox":[426,578,430,32]}
+{"kind":"textbox","id":"sh/x4jip072","slide":5,"text":"LIVE DEMO + 8 TESTS + BENCHMARK","textPreview":"LIVE DEMO + 8 TESTS + BENCHMARK","textChars":31,"textLines":1,"bbox":[436,579,410,29]}
+{"kind":"textbox","id":"sh/w3a1wvqh","slide":5,"text":"JAY","textPreview":"JAY","textChars":3,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/nyh0jqp0","slide":5,"text":"//  5 OF 5","textPreview":"//  5 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/xzws2t","slide":5,"text":"Close Jay's five-slide section by defining the evaluation contract: speed is shown by constant-time structures, durability by recovery, atomicity by transaction tests, and ordered queries by the B-tree demo.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/huciba","slide":6,"title":"EVICTION POLICIES","textShapes":22}
+{"kind":"shape","id":"sh/8bit436d","slide":6,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/7apsvy5s","slide":6,"text":"EVICTION POLICIES","textPreview":"EVICTION POLICIES","textChars":17,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/69gb2do7","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/l87at8nm","slide":6,"text":"CACHE CAPACITY","textPreview":"CACHE CAPACITY","textChars":14,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/k7yt036h","slide":6,"text":"Recency and frequency reward different keys","textPreview":"Recency and frequency reward different keys","textChars":43,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/j6psry5w","slide":6,"bbox":[64,174,548,424]}
+{"kind":"shape","id":"sh/y5grytob","slide":6,"bbox":[668,174,548,424]}
+{"kind":"shape","id":"sh/p4ba5sn6","slide":6,"bbox":[92,204,110,32]}
+{"kind":"textbox","id":"sh/432tcnml","slide":6,"text":"LRU","textPreview":"LRU","textChars":3,"textLines":1,"bbox":[102,205,90,29]}
+{"kind":"shape","id":"sh/6pw7ulsr","slide":6,"bbox":[696,204,110,32]}
+{"kind":"textbox","id":"sh/7a58nq9c","slide":6,"text":"LFU","textPreview":"LFU","textChars":3,"textLines":1,"bbox":[706,205,90,29]}
+{"kind":"textbox","id":"sh/8bepwvqh","slide":6,"text":"Who was used last?","textPreview":"Who was used last?","textChars":18,"textLines":1,"bbox":[92,258,430,44]}
+{"kind":"textbox","id":"sh/tcnqp0r2","slide":6,"text":"Who was used most?","textPreview":"Who was used most?","textChars":18,"textLines":1,"bbox":[696,258,430,44]}
+{"kind":"shape","id":"sh/ylw7q1sf","slide":6,"bbox":[96,340,84,84]}
+{"kind":"textbox","id":"sh/jm58j690","slide":6,"text":"A","textPreview":"A","textChars":1,"textLines":1,"bbox":[96,352,84,58]}
+{"kind":"shape","id":"sh/knepsbal","slide":6,"bbox":[204,340,84,84]}
+{"kind":"textbox","id":"sh/lonqlgr6","slide":6,"text":"D","textPreview":"D","textChars":1,"textLines":1,"bbox":[204,352,84,58]}
+{"kind":"shape","id":"sh/2hgr258z","slide":6,"bbox":[312,340,84,84]}
+{"kind":"textbox","id":"sh/3ip8va9k","slide":6,"text":"C","textPreview":"C","textChars":1,"textLines":1,"bbox":[312,352,84,58]}
+{"kind":"shape","id":"sh/fahw7ylk","slide":6,"bbox":[420,340,84,84]}
+{"kind":"textbox","id":"sh/e98vyt4z","slide":6,"text":"B","textPreview":"B","textChars":1,"textLines":1,"bbox":[420,352,84,58]}
+{"kind":"textbox","id":"sh/1cze983q","slide":6,"text":"MOST RECENT","textPreview":"MOST RECENT","textChars":11,"textLines":1,"bbox":[96,444,190,24]}
+{"kind":"textbox","id":"sh/0bqd03m5","slide":6,"text":"EVICT","textPreview":"EVICT","textChars":5,"textLines":1,"bbox":[448,444,76,24]}
+{"kind":"shape","id":"sh/nehwbilg","slide":6,"bbox":[700,332,380,38]}
+{"kind":"textbox","id":"sh/2d8v2d4b","slide":6,"text":"A   9×","textPreview":"A   9×","textChars":6,"textLines":1,"bbox":[716,335,130,30]}
+{"kind":"shape","id":"sh/pgjeds3m","slide":6,"bbox":[700,387,318,38]}
+{"kind":"textbox","id":"sh/ofqx4n21","slide":6,"text":"C   4×","textPreview":"C   4×","textChars":6,"textLines":1,"bbox":[716,390,130,30]}
+{"kind":"shape","id":"sh/bi1wfils","slide":6,"bbox":[700,442,256,38]}
+{"kind":"textbox","id":"sh/ahsf6xk7","slide":6,"text":"D   2×","textPreview":"D   2×","textChars":6,"textLines":1,"bbox":[716,445,130,30]}
+{"kind":"shape","id":"sh/87udwni5","slide":6,"bbox":[700,497,194,38]}
+{"kind":"textbox","id":"sh/983e5sjq","slide":6,"text":"B   1×","textPreview":"B   1×","textChars":6,"textLines":1,"bbox":[716,500,130,30]}
+{"kind":"textbox","id":"sh/mlsvux0f","slide":6,"text":"O(1) average operations","textPreview":"O(1) average operations","textChars":23,"textLines":1,"bbox":[92,514,420,30]}
+{"kind":"textbox","id":"sh/761c3210","slide":6,"text":"LRU breaks frequency ties","textPreview":"LRU breaks frequency ties","textChars":25,"textLines":1,"bbox":[696,550,430,30]}
+{"kind":"textbox","id":"sh/kjadsni9","slide":6,"text":"SANCHIT","textPreview":"SANCHIT","textChars":7,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/lkju1sju","slide":6,"text":"//  1 OF 5","textPreview":"//  1 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/huciba","slide":6,"text":"Use the visual order. LRU evicts B because it is least recent. LFU evicts B because it has the lowest access count; recency breaks ties within the same frequency.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/ddkd99","slide":7,"title":"BENCHMARK","textShapes":11}
+{"kind":"shape","id":"sh/d4761c3y","slide":7,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/qhwn6x47","slide":7,"text":"BENCHMARK","textPreview":"BENCHMARK","textChars":9,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/bi54z2ls","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/ofe54nmh","slide":7,"text":"MEASURED RESULT","textPreview":"MEASURED RESULT","textChars":15,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/pgnmxs3m","slide":7,"text":"LFU wins when traffic is skewed","textPreview":"LFU wins when traffic is skewed","textChars":31,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/3e54vilw","slide":7,"bbox":[868,190,348,250]}
+{"kind":"textbox","id":"sh/8bi5grml","slide":7,"text":"+8.14","textPreview":"+8.14","textChars":5,"textLines":1,"bbox":[896,220,290,88]}
+{"kind":"textbox","id":"sh/9cr69w36","slide":7,"text":"percentage points","textPreview":"percentage points","textChars":17,"textLines":1,"bbox":[898,306,280,30]}
+{"kind":"textbox","id":"sh/1szul0ne","slide":7,"text":"LFU advantage under\nZipfian access","textPreview":"LFU advantage under | Zipfian access","textChars":34,"textLines":2,"bbox":[898,348,280,58]}
+{"kind":"shape","id":"sh/0rqdcvmt","slide":7,"bbox":[900,484,250,32]}
+{"kind":"textbox","id":"sh/zqhcjq58","slide":7,"text":"81.98% BOTH","textPreview":"81.98% BOTH","textChars":11,"textLines":1,"bbox":[910,485,230,29]}
+{"kind":"textbox","id":"sh/ep8val4n","slide":7,"text":"Working-set traffic rewards both policies equally.","textPreview":"Working-set traffic rewards both policies equally.","textChars":50,"textLines":1,"bbox":[900,530,280,52]}
+{"kind":"textbox","id":"sh/dozuhgn2","slide":7,"text":"SANCHIT","textPreview":"SANCHIT","textChars":7,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/c3qd8bmx","slide":7,"text":"//  2 OF 5","textPreview":"//  2 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"chart","id":"ch/m5kvid8n","slide":7,"name":"","chartType":"bar","bbox":[64,174,760,436]}
+{"kind":"notes","id":"nt/ddkd99","slide":7,"text":"These are locally measured benchmark results. Highlight the orange +8.14 point improvement under Zipfian access; then show that both policies reach 81.98% on the working set.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/ir7clk","slide":8,"title":"TRANSACTIONS","textShapes":17}
+{"kind":"shape","id":"sh/qd8rydkz","slide":8,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/dgza9sja","slide":8,"text":"TRANSACTIONS","textPreview":"TRANSACTIONS","textChars":12,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/cfq90n2p","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/zi1sb21g","slide":8,"text":"ATOMIC UPDATES","textPreview":"ATOMIC UPDATES","textChars":14,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/yhsr2xkv","slide":8,"text":"A transaction publishes everything—or nothing","textPreview":"A transaction publishes everything—or nothing","textChars":45,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/lkjadsjm","slide":8,"bbox":[76,250,260,150]}
+{"kind":"shape","id":"sh/0jat4n21","slide":8,"bbox":[510,222,260,206]}
+{"kind":"shape","id":"sh/fmxszy1c","slide":8,"bbox":[944,250,260,150]}
+{"kind":"shape","id":"sh/elorqtkr","slide":8,"bbox":[336,325,174,0]}
+{"kind":"shape","id":"sh/ozixwru1","slide":8,"bbox":[770,325,174,0]}
+{"kind":"textbox","id":"sh/p0repwvm","slide":8,"text":"ACCOUNT A","textPreview":"ACCOUNT A","textChars":9,"textLines":1,"bbox":[102,270,208,30]}
+{"kind":"textbox","id":"sh/2d0fuhcv","slide":8,"text":"− ₹5,000","textPreview":"− ₹5,000","textChars":8,"textLines":1,"bbox":[102,318,208,48]}
+{"kind":"textbox","id":"sh/ne9wnmdg","slide":8,"text":"TX-7","textPreview":"TX-7","textChars":4,"textLines":1,"bbox":[540,244,200,36]}
+{"kind":"textbox","id":"sh/c32x0rud","slide":8,"text":"BUFFER","textPreview":"BUFFER","textChars":6,"textLines":1,"bbox":[540,298,200,34]}
+{"kind":"textbox","id":"sh/x4betwby","slide":8,"text":"LOCK • WAL • COMMIT","textPreview":"LOCK • WAL • COMMIT","textChars":19,"textLines":1,"bbox":[530,354,220,26]}
+{"kind":"textbox","id":"sh/a1kfy1c7","slide":8,"text":"ACCOUNT B","textPreview":"ACCOUNT B","textChars":9,"textLines":1,"bbox":[970,270,208,30]}
+{"kind":"textbox","id":"sh/b2twrmds","slide":8,"text":"+ ₹5,000","textPreview":"+ ₹5,000","textChars":8,"textLines":1,"bbox":[970,318,208,48]}
+{"kind":"shape","id":"sh/s7ydo7ut","slide":8,"bbox":[212,498,856,74]}
+{"kind":"textbox","id":"sh/d87ehcve","slide":8,"text":"COMMIT","textPreview":"COMMIT","textChars":6,"textLines":1,"bbox":[242,513,150,42]}
+{"kind":"textbox","id":"sh/t4zuloni","slide":8,"text":"both changes visible","textPreview":"both changes visible","textChars":20,"textLines":1,"bbox":[404,513,260,42]}
+{"kind":"textbox","id":"sh/83qds3mx","slide":8,"text":"ROLLBACK","textPreview":"ROLLBACK","textChars":8,"textLines":1,"bbox":[680,513,160,42]}
+{"kind":"textbox","id":"sh/72hcjy5c","slide":8,"text":"zero changes visible","textPreview":"zero changes visible","textChars":20,"textLines":1,"bbox":[850,513,190,42]}
+{"kind":"textbox","id":"sh/618vqt4r","slide":8,"text":"SANCHIT","textPreview":"SANCHIT","textChars":7,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/hsjup8ne","slide":8,"text":"//  3 OF 5","textPreview":"//  3 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/ir7clk","slide":8,"text":"Use a transfer example. The transaction buffers both account changes, locks modified keys, writes the durable records and COMMIT marker, and only then publishes both changes.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/2xakt7","slide":9,"title":"GUARANTEES","textShapes":16}
+{"kind":"shape","id":"sh/3qtkb210","slide":9,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/4r2lk72l","slide":9,"text":"GUARANTEES","textPreview":"GUARANTEES","textChars":10,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/5sb2dcj6","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/u103exkj","slide":9,"text":"WHY THE PROTOCOL IS SAFE","textPreview":"WHY THE PROTOCOL IS SAFE","textChars":24,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/v29k7i14","slide":9,"text":"Three invariants block partial state","textPreview":"Three invariants block partial state","textChars":36,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"textbox","id":"sh/wnilgn2p","slide":9,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[64,192,320,120]}
+{"kind":"shape","id":"sh/hor29sja","slide":9,"bbox":[64,330,330,0]}
+{"kind":"textbox","id":"sh/ex43ahkn","slide":9,"text":"WAL FIRST","textPreview":"WAL FIRST","textChars":9,"textLines":1,"bbox":[64,354,330,38]}
+{"kind":"textbox","id":"sh/fyd4jm18","slide":9,"text":"The durable record exists before memory changes.","textPreview":"The durable record exists before memory changes.","textChars":48,"textLines":1,"bbox":[64,408,330,90]}
+{"kind":"textbox","id":"sh/fu1gfalw","slide":9,"text":"00","textPreview":"00","textChars":2,"textLines":1,"bbox":[466,192,320,120]}
+{"kind":"shape","id":"sh/etsf654b","slide":9,"bbox":[466,330,330,0]}
+{"kind":"textbox","id":"sh/1wjyhk32","slide":9,"text":"PARTIAL TX","textPreview":"PARTIAL TX","textChars":10,"textLines":1,"bbox":[466,354,330,38]}
+{"kind":"textbox","id":"sh/0vah8fmh","slide":9,"text":"Recovery ignores transactions without COMMIT.","textPreview":"Recovery ignores transactions without COMMIT.","textChars":45,"textLines":1,"bbox":[466,408,330,90]}
+{"kind":"textbox","id":"sh/nylgjuls","slide":9,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[868,192,320,120]}
+{"kind":"shape","id":"sh/2xczap47","slide":9,"bbox":[868,330,330,0]}
+{"kind":"textbox","id":"sh/p03ylk3y","slide":9,"text":"WRITE OWNER","textPreview":"WRITE OWNER","textChars":11,"textLines":1,"bbox":[868,354,330,38]}
+{"kind":"textbox","id":"sh/ozuhczmd","slide":9,"text":"Exclusive per-key locks detect conflicts.","textPreview":"Exclusive per-key locks detect conflicts.","textChars":41,"textLines":1,"bbox":[868,408,330,90]}
+{"kind":"shape","id":"sh/b2lgnul4","slide":9,"bbox":[64,548,1138,54]}
+{"kind":"textbox","id":"sh/a1czep4j","slide":9,"text":"ATOMICITY + DURABILITY + BASIC ISOLATION","textPreview":"ATOMICITY + DURABILITY + BASIC ISOLATION","textChars":40,"textLines":1,"bbox":[90,558,1086,34]}
+{"kind":"textbox","id":"sh/mxgj6tor","slide":9,"text":"SANCHIT","textPreview":"SANCHIT","textChars":7,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/7yp0fy5c","slide":9,"text":"//  4 OF 5","textPreview":"//  4 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/2xakt7","slide":9,"text":"Map the three invariants to ACID: WAL first gives durability, no partial transaction replay gives atomicity, and one write owner per key provides conflict isolation.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/xo63f8","slide":10,"title":"IMPLEMENTATION","textShapes":23}
+{"kind":"shape","id":"sh/at4jytkr","slide":10,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/xwf29832","slide":10,"text":"IMPLEMENTATION","textPreview":"IMPLEMENTATION","textChars":14,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/cvm1032x","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/zixkbil8","slide":10,"text":"CODE ANATOMY","textPreview":"CODE ANATOMY","textChars":12,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/yhoj2dkn","slide":10,"text":"Five focused classes. One reliable write path.","textPreview":"Five focused classes. One reliable write path.","textChars":46,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/lkf2ds3e","slide":10,"bbox":[66,174,520,56]}
+{"kind":"textbox","id":"sh/kj614n2t","slide":10,"text":"CacheEngine","textPreview":"CacheEngine","textChars":11,"textLines":1,"bbox":[88,182,250,38]}
+{"kind":"textbox","id":"sh/7mxkfilk","slide":10,"text":"orchestrates","textPreview":"orchestrates","textChars":12,"textLines":1,"bbox":[356,182,202,38]}
+{"kind":"shape","id":"sh/mlo36xkz","slide":10,"bbox":[66,252,520,56]}
+{"kind":"textbox","id":"sh/4jqts76l","slide":10,"text":"WriteAheadLog","textPreview":"WriteAheadLog","textChars":13,"textLines":1,"bbox":[88,260,250,38]}
+{"kind":"textbox","id":"sh/5kzulc76","slide":10,"text":"persists","textPreview":"persists","textChars":8,"textLines":1,"bbox":[356,260,202,38]}
+{"kind":"shape","id":"sh/ih8bqxov","slide":10,"bbox":[66,330,520,56]}
+{"kind":"textbox","id":"sh/jihcj2pg","slide":10,"text":"LRU / LFU","textPreview":"LRU / LFU","textChars":9,"textLines":1,"bbox":[88,338,250,38]}
+{"kind":"textbox","id":"sh/s7qtw76x","slide":10,"text":"evicts","textPreview":"evicts","textChars":6,"textLines":1,"bbox":[356,338,202,38]}
+{"kind":"shape","id":"sh/t8zupc7i","slide":10,"bbox":[66,408,520,56]}
+{"kind":"textbox","id":"sh/6l8buxor","slide":10,"text":"Transaction","textPreview":"Transaction","textChars":11,"textLines":1,"bbox":[88,416,250,38]}
+{"kind":"textbox","id":"sh/r6hcn2pc","slide":10,"text":"buffers + locks","textPreview":"buffers + locks","textChars":15,"textLines":1,"bbox":[356,416,202,38]}
+{"kind":"shape","id":"sh/gbat0r6t","slide":10,"bbox":[66,486,520,56]}
+{"kind":"textbox","id":"sh/1cjutw7e","slide":10,"text":"BTree","textPreview":"BTree","textChars":5,"textLines":1,"bbox":[88,494,250,38]}
+{"kind":"textbox","id":"sh/psfudczi","slide":10,"text":"orders keys","textPreview":"orders keys","textChars":11,"textLines":1,"bbox":[356,494,202,38]}
+{"kind":"shape","id":"sh/or6tkryx","slide":10,"bbox":[656,174,560,360]}
+{"kind":"textbox","id":"sh/n6xcbmhs","slide":10,"text":"public void put(String key, String value) {","textPreview":"public void put(String key, String value) {","textChars":43,"textLines":1,"bbox":[686,206,500,28]}
+{"kind":"textbox","id":"sh/25obihg7","slide":10,"text":"  wal.append(SET, key, value);","textPreview":"wal.append(SET, key, value);","textChars":30,"textLines":1,"bbox":[686,250,500,28]}
+{"kind":"textbox","id":"sh/xwzuhwfu","slide":10,"text":"  store.put(key, value);","textPreview":"store.put(key, value);","textChars":24,"textLines":1,"bbox":[686,294,500,28]}
+{"kind":"textbox","id":"sh/cvqtory9","slide":10,"text":"  index.insert(key);","textPreview":"index.insert(key);","textChars":20,"textLines":1,"bbox":[686,338,500,28]}
+{"kind":"textbox","id":"sh/buxcfmxo","slide":10,"text":"}","textPreview":"}","textChars":1,"textLines":1,"bbox":[686,382,500,28]}
+{"kind":"shape","id":"sh/atobmhg3","slide":10,"bbox":[686,438,470,0]}
+{"kind":"textbox","id":"sh/d0va5sza","slide":10,"text":"ORDER IS THE GUARANTEE","textPreview":"ORDER IS THE GUARANTEE","textChars":22,"textLines":1,"bbox":[686,458,470,34]}
+{"kind":"shape","id":"sh/szmtcny5","slide":10,"bbox":[710,566,450,32]}
+{"kind":"textbox","id":"sh/it0zq9sr","slide":10,"text":"JAVA 17  •  NO EXTERNAL RUNTIME LIBRARIES","textPreview":"JAVA 17  •  NO EXTERNAL RUNTIME LIBRARIES","textChars":41,"textLines":1,"bbox":[720,567,430,29]}
+{"kind":"textbox","id":"sh/ju90zetw","slide":10,"text":"SANCHIT","textPreview":"SANCHIT","textChars":7,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/4vihsjah","slide":10,"text":"//  5 OF 5","textPreview":"//  5 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/xo63f8","slide":10,"text":"End Sanchit's five-slide section with implementation discipline. Point out that the put method mirrors the architecture: durable log first, then memory and the ordered index. Each class has a focused responsibility.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/v8a0l7","slide":11,"title":"INDEXING","textShapes":18}
+{"kind":"shape","id":"sh/czq9sryd","slide":11,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/byhszmxs","slide":11,"text":"INDEXING","textPreview":"INDEXING","textChars":8,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/axorqhg7","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/pcfaxczm","slide":11,"text":"TWO STRUCTURES, TWO JOBS","textPreview":"TWO STRUCTURES, TWO JOBS","textChars":24,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/ob6947yh","slide":11,"text":"The B-tree makes ordered queries possible","textPreview":"The B-tree makes ordered queries possible","textChars":41,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"textbox","id":"sh/naxsv2hw","slide":11,"text":"HASH CACHE","textPreview":"HASH CACHE","textChars":10,"textLines":1,"bbox":[66,174,250,32]}
+{"kind":"textbox","id":"sh/29or2hgb","slide":11,"text":"Exact key","textPreview":"Exact key","textChars":9,"textLines":1,"bbox":[66,212,250,36]}
+{"kind":"shape","id":"sh/98ja9gf6","slide":11,"bbox":[66,266,180,32]}
+{"kind":"textbox","id":"sh/87at0byl","slide":11,"text":"O(1) AVG","textPreview":"O(1) AVG","textChars":8,"textLines":1,"bbox":[76,267,160,29]}
+{"kind":"shape","id":"sh/ydgfyd8j","slide":11,"bbox":[66,328,270,150]}
+{"kind":"textbox","id":"sh/zepgrip4","slide":11,"text":"GET user:42","textPreview":"GET user:42","textChars":11,"textLines":1,"bbox":[90,354,220,32]}
+{"kind":"textbox","id":"sh/kfyh03qp","slide":11,"text":"→ Jay","textPreview":"→ Jay","textChars":5,"textLines":1,"bbox":[90,410,220,32]}
+{"kind":"shape","id":"sh/lg7yt87a","slide":11,"bbox":[382,168,0,0]}
+{"kind":"textbox","id":"sh/a9wfut8n","slide":11,"text":"B-TREE INDEX","textPreview":"B-TREE INDEX","textChars":12,"textLines":1,"bbox":[430,174,300,32]}
+{"kind":"textbox","id":"sh/ba5gnyps","slide":11,"text":"Ordered range","textPreview":"Ordered range","textChars":13,"textLines":1,"bbox":[430,212,300,36]}
+{"kind":"shape","id":"sh/cbexw3qd","slide":11,"bbox":[744,190,180,64]}
+{"kind":"shape","id":"sh/xc7yp87y","slide":11,"bbox":[520,342,190,64]}
+{"kind":"shape","id":"sh/u50z6x8r","slide":11,"bbox":[742,342,190,64]}
+{"kind":"shape","id":"sh/v69gz2pc","slide":11,"bbox":[964,342,190,64]}
+{"kind":"shape","id":"sh/rq1cru5o","slide":11,"bbox":[615,254,219,88]}
+{"kind":"shape","id":"sh/qpsvipo3","slide":11,"bbox":[834,254,3,88]}
+{"kind":"shape","id":"sh/dsjetknu","slide":11,"bbox":[834,254,225,88]}
+{"kind":"textbox","id":"sh/sradkz69","slide":11,"text":"M","textPreview":"M","textChars":1,"textLines":1,"bbox":[744,202,180,38]}
+{"kind":"textbox","id":"sh/felwvu5k","slide":11,"text":"A  F","textPreview":"A  F","textChars":4,"textLines":1,"bbox":[520,354,190,38]}
+{"kind":"textbox","id":"sh/etcvmpof","slide":11,"text":"N  R","textPreview":"N  R","textChars":4,"textLines":1,"bbox":[742,354,190,38]}
+{"kind":"textbox","id":"sh/1g3ex4nq","slide":11,"text":"S  Z","textPreview":"S  Z","textChars":4,"textLines":1,"bbox":[964,354,190,38]}
+{"kind":"shape","id":"sh/0fudoz65","slide":11,"bbox":[454,500,700,70]}
+{"kind":"textbox","id":"sh/nilwze5w","slide":11,"text":"RANGE  account:100  →  account:199","textPreview":"RANGE  account:100  →  account:199","textChars":34,"textLines":1,"bbox":[480,515,648,38]}
+{"kind":"textbox","id":"sh/2hcvq9ob","slide":11,"text":"NIKHIL","textPreview":"NIKHIL","textChars":6,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/knedgj2p","slide":11,"text":"//  1 OF 5","textPreview":"//  1 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/v8a0l7","slide":11,"text":"Contrast exact lookup with ordered lookup. The hash store serves O(1) average GET/SET/DELETE; the real minimum-degree B-tree keeps keys ordered for inclusive range queries.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/utclrd","slide":12,"title":"LIVE DEMO","textShapes":24}
+{"kind":"shape","id":"sh/etc7e18b","slide":12,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/1g3qpgrm","slide":12,"text":"LIVE DEMO","textPreview":"LIVE DEMO","textChars":9,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/0vupgbq1","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/ni58rq9s","slide":12,"text":"CLI WALKTHROUGH","textPreview":"CLI WALKTHROUGH","textChars":15,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/2hwril87","slide":12,"text":"Recovery, proven live in under a minute","textPreview":"Recovery, proven live in under a minute","textChars":39,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/pknqtgry","slide":12,"bbox":[64,170,760,448]}
+{"kind":"shape","id":"sh/oje9kbqd","slide":12,"bbox":[64,170,760,42]}
+{"kind":"shape","id":"sh/3m18fm9o","slide":12,"bbox":[86,185,12,12]}
+{"kind":"shape","id":"sh/ils76h83","slide":12,"bbox":[106,185,12,12]}
+{"kind":"shape","id":"sh/sz2pcby9","slide":12,"bbox":[126,185,12,12]}
+{"kind":"textbox","id":"sh/t0bq5gzu","slide":12,"text":"persistent-cache — java","textPreview":"persistent-cache — java","textChars":23,"textLines":1,"bbox":[164,177,300,28]}
+{"kind":"textbox","id":"sh/6x07a1gj","slide":12,"text":"> SET account:42 10000","textPreview":"> SET account:42 10000","textChars":22,"textLines":1,"bbox":[92,232,694,31]}
+{"kind":"textbox","id":"sh/ry9836ho","slide":12,"text":"OK","textPreview":"OK","textChars":2,"textLines":1,"bbox":[92,275,694,31]}
+{"kind":"textbox","id":"sh/g32pgbyl","slide":12,"text":"> GET account:42","textPreview":"> GET account:42","textChars":16,"textLines":1,"bbox":[92,318,694,31]}
+{"kind":"textbox","id":"sh/14bq9gz6","slide":12,"text":"10000","textPreview":"10000","textChars":5,"textLines":1,"bbox":[92,361,694,31]}
+{"kind":"textbox","id":"sh/e1k7elgf","slide":12,"text":"// restart process","textPreview":"// restart process","textChars":18,"textLines":1,"bbox":[92,404,694,31]}
+{"kind":"textbox","id":"sh/f2t876h0","slide":12,"text":"Recovered 1 operation; 1 key available.","textPreview":"Recovered 1 operation; 1 key available.","textChars":39,"textLines":1,"bbox":[92,447,694,31]}
+{"kind":"textbox","id":"sh/w7yp4ry1","slide":12,"text":"> RANGE account:40 account:50","textPreview":"> RANGE account:40 account:50","textChars":29,"textLines":1,"bbox":[92,490,694,31]}
+{"kind":"textbox","id":"sh/h8r6xwzm","slide":12,"text":"account:42 = 10000","textPreview":"account:42 = 10000","textChars":18,"textLines":1,"bbox":[92,533,694,31]}
+{"kind":"textbox","id":"sh/xojm18rq","slide":12,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[890,190,58,38]}
+{"kind":"textbox","id":"sh/cnq5s3a5","slide":12,"text":"WRITE","textPreview":"WRITE","textChars":5,"textLines":1,"bbox":[954,190,250,38]}
+{"kind":"shape","id":"sh/b2h4zi9k","slide":12,"bbox":[904,252,0,0]}
+{"kind":"textbox","id":"sh/a18nqdsz","slide":12,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[890,290,58,38]}
+{"kind":"textbox","id":"sh/lsj65srm","slide":12,"text":"RESTART","textPreview":"RESTART","textChars":7,"textLines":1,"bbox":[954,290,250,38]}
+{"kind":"shape","id":"sh/kra5wna1","slide":12,"bbox":[904,352,0,0]}
+{"kind":"textbox","id":"sh/zq143i9g","slide":12,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[890,390,58,38]}
+{"kind":"textbox","id":"sh/ypsnudsv","slide":12,"text":"RECOVER","textPreview":"RECOVER","textChars":7,"textLines":1,"bbox":[954,390,250,38]}
+{"kind":"shape","id":"sh/9w369sri","slide":12,"bbox":[904,452,0,0]}
+{"kind":"textbox","id":"sh/8vu507ad","slide":12,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[890,490,58,38]}
+{"kind":"textbox","id":"sh/6pkbe54j","slide":12,"text":"QUERY","textPreview":"QUERY","textChars":5,"textLines":1,"bbox":[954,490,250,38]}
+{"kind":"shape","id":"sh/rqts7al4","slide":12,"bbox":[902,558,250,32]}
+{"kind":"textbox","id":"sh/srmtgfmp","slide":12,"text":"VISIBLE PROOF","textPreview":"VISIBLE PROOF","textChars":13,"textLines":1,"bbox":[912,559,230,29]}
+{"kind":"textbox","id":"sh/tsvu903u","slide":12,"text":"NIKHIL","textPreview":"NIKHIL","textChars":6,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/et4bi54f","slide":12,"text":"//  2 OF 5","textPreview":"//  2 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/utclrd","slide":12,"text":"Run these exact commands in the live demo. The key proof is the restart line: the application reports one recovered operation and the range query returns the original value.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/jcs5u7","slide":13,"title":"VERIFICATION","textShapes":26}
+{"kind":"shape","id":"sh/7q1knyto","slide":13,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/8ba1w3a9","slide":13,"text":"VERIFICATION","textPreview":"VERIFICATION","textChars":12,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/9cj2p8bu","slide":13,"text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/udcjydsf","slide":13,"text":"EVIDENCE","textPreview":"EVIDENCE","textChars":8,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/velkrit0","slide":13,"text":"Eight tests challenge the failure boundaries","textPreview":"Eight tests challenge the failure boundaries","textChars":44,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"textbox","id":"sh/wfu103al","slide":13,"text":"8/8","textPreview":"8/8","textChars":3,"textLines":1,"bbox":[66,178,380,148]}
+{"kind":"textbox","id":"sh/hg32t8bq","slide":13,"text":"PASSED","textPreview":"PASSED","textChars":6,"textLines":1,"bbox":[78,320,300,42]}
+{"kind":"shape","id":"sh/ihc32dsb","slide":13,"bbox":[66,390,350,0]}
+{"kind":"textbox","id":"sh/jilkvitw","slide":13,"text":"Java 17 • dependency-free runner","textPreview":"Java 17 • dependency-free runner","textChars":32,"textLines":1,"bbox":[66,412,360,50]}
+{"kind":"shape","id":"sh/n6dgra5w","slide":13,"bbox":[510,195,18,18]}
+{"kind":"textbox","id":"sh/ml4zip4b","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[511,191,16,24]}
+{"kind":"textbox","id":"sh/98vytkn2","slide":13,"text":"Cache engine","textPreview":"Cache engine","textChars":12,"textLines":1,"bbox":[544,184,280,42]}
+{"kind":"shape","id":"sh/87mhkfmh","slide":13,"bbox":[544,236,278,0]}
+{"kind":"shape","id":"sh/zitgna50","slide":13,"bbox":[510,287,18,18]}
+{"kind":"textbox","id":"sh/yhkze5of","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[511,283,16,24]}
+{"kind":"textbox","id":"sh/lkbypkn6","slide":13,"text":"LRU eviction","textPreview":"LRU eviction","textChars":12,"textLines":1,"bbox":[544,276,280,42]}
+{"kind":"shape","id":"sh/0j2hgfml","slide":13,"bbox":[544,328,278,0]}
+{"kind":"shape","id":"sh/jexgzu54","slide":13,"bbox":[510,379,18,18]}
+{"kind":"textbox","id":"sh/idozq94j","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[511,375,16,24]}
+{"kind":"textbox","id":"sh/e98jydor","slide":13,"text":"LFU eviction","textPreview":"LFU eviction","textChars":12,"textLines":1,"bbox":[544,368,280,42]}
+{"kind":"shape","id":"sh/fahkrypc","slide":13,"bbox":[544,420,278,0]}
+{"kind":"shape","id":"sh/gba1036x","slide":13,"bbox":[510,471,18,18]}
+{"kind":"textbox","id":"sh/1wj2t87i","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[511,467,16,24]}
+{"kind":"textbox","id":"sh/2xsj2do3","slide":13,"text":"B-tree ranges","textPreview":"B-tree ranges","textChars":13,"textLines":1,"bbox":[544,460,280,42]}
+{"kind":"shape","id":"sh/3y1kvipo","slide":13,"bbox":[544,512,278,0]}
+{"kind":"shape","id":"sh/oza14n6t","slide":13,"bbox":[860,195,18,18]}
+{"kind":"textbox","id":"sh/p0j2xs7e","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[861,191,16,24]}
+{"kind":"textbox","id":"sh/i1ojq9oj","slide":13,"text":"WAL recovery","textPreview":"WAL recovery","textChars":12,"textLines":1,"bbox":[894,184,280,42]}
+{"kind":"shape","id":"sh/j2x0jep4","slide":13,"bbox":[894,236,278,0]}
+{"kind":"shape","id":"sh/lwnmpwrm","slide":13,"bbox":[860,287,18,18]}
+{"kind":"textbox","id":"sh/0ve5wrqh","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[861,283,16,24]}
+{"kind":"textbox","id":"sh/zu54nm9w","slide":13,"text":"Transactions","textPreview":"Transactions","textChars":12,"textLines":1,"bbox":[894,276,280,42]}
+{"kind":"shape","id":"sh/ytcnuh8b","slide":13,"bbox":[894,328,278,0]}
+{"kind":"shape","id":"sh/90nmtwry","slide":13,"bbox":[860,379,18,18]}
+{"kind":"textbox","id":"sh/8ze50rqd","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[861,375,16,24]}
+{"kind":"textbox","id":"sh/ny54rm9s","slide":13,"text":"Incomplete TX","textPreview":"Incomplete TX","textChars":13,"textLines":1,"bbox":[894,368,280,42]}
+{"kind":"shape","id":"sh/mxwnyh87","slide":13,"bbox":[894,420,278,0]}
+{"kind":"shape","id":"sh/p43mhcre","slide":13,"bbox":[860,471,18,18]}
+{"kind":"textbox","id":"sh/o3ulo7q9","slide":13,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[861,467,16,24]}
+{"kind":"textbox","id":"sh/sjipwfah","slide":13,"text":"CLI flow","textPreview":"CLI flow","textChars":8,"textLines":1,"bbox":[894,460,280,42]}
+{"kind":"shape","id":"sh/tkrqp0b2","slide":13,"bbox":[894,512,278,0]}
+{"kind":"shape","id":"sh/6h07u5sr","slide":13,"bbox":[506,556,700,48]}
+{"kind":"textbox","id":"sh/7i98natc","slide":13,"text":"make test  →  All 8 tests passed.","textPreview":"make test  →  All 8 tests passed.","textChars":33,"textLines":1,"bbox":[530,563,650,34]}
+{"kind":"textbox","id":"sh/kvipsval","slide":13,"text":"NIKHIL","textPreview":"NIKHIL","textChars":6,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/5grql0b6","slide":13,"text":"//  3 OF 5","textPreview":"//  3 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/jcs5u7","slide":13,"text":"State the result first: all eight tests pass. Then point out that tests cover the dangerous boundaries—recovery, conflicts, incomplete transactions—not just simple getters and setters.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/fy6hev","slide":14,"title":"ASSESSMENT MAP","textShapes":19}
+{"kind":"shape","id":"sh/2dkny50b","slide":14,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/pgb690zm","slide":14,"text":"ASSESSMENT MAP","textPreview":"ASSESSMENT MAP","textChars":14,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/of250fi1","slide":14,"text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/b2dobahs","slide":14,"text":"ACADEMIC RELEVANCE + OWNERSHIP","textPreview":"ACADEMIC RELEVANCE + OWNERSHIP","textChars":30,"textLines":1,"bbox":[64,42,450,28]}
+{"kind":"textbox","id":"sh/a14n2507","slide":14,"text":"One project connects four core CS subjects","textPreview":"One project connects four core CS subjects","textChars":42,"textLines":1,"bbox":[64,76,1150,68]}
+{"kind":"shape","id":"sh/x4v6dkzy","slide":14,"bbox":[80,192,520,142]}
+{"kind":"textbox","id":"sh/c3m54fid","slide":14,"text":"DSA","textPreview":"DSA","textChars":3,"textLines":1,"bbox":[104,212,130,54]}
+{"kind":"textbox","id":"sh/r694zqho","slide":14,"text":"LRU • LFU • B-tree","textPreview":"LRU • LFU • B-tree","textChars":18,"textLines":1,"bbox":[242,212,328,54]}
+{"kind":"shape","id":"sh/ql0nql03","slide":14,"bbox":[104,280,466,0]}
+{"kind":"textbox","id":"sh/w7yxgrqx","slide":14,"text":"implemented + demonstrated","textPreview":"implemented + demonstrated","textChars":26,"textLines":1,"bbox":[104,290,466,26]}
+{"kind":"shape","id":"sh/x87ypw7i","slide":14,"bbox":[676,192,520,142]}
+{"kind":"textbox","id":"sh/a5wfe18r","slide":14,"text":"DBMS","textPreview":"DBMS","textChars":4,"textLines":1,"bbox":[700,212,130,54]}
+{"kind":"textbox","id":"sh/b6pgnmpc","slide":14,"text":"WAL • transactions","textPreview":"WAL • transactions","textChars":18,"textLines":1,"bbox":[838,212,328,54]}
+{"kind":"shape","id":"sh/kbyxkbqt","slide":14,"bbox":[700,280,466,0]}
+{"kind":"textbox","id":"sh/lc7ytg7e","slide":14,"text":"implemented + demonstrated","textPreview":"implemented + demonstrated","textChars":26,"textLines":1,"bbox":[700,290,466,26]}
+{"kind":"shape","id":"sh/y9gfi18n","slide":14,"bbox":[80,390,520,142]}
+{"kind":"textbox","id":"sh/japgr6p8","slide":14,"text":"OS","textPreview":"OS","textChars":2,"textLines":1,"bbox":[104,410,130,54]}
+{"kind":"textbox","id":"sh/0fex87qp","slide":14,"text":"locks • recovery","textPreview":"locks • recovery","textChars":16,"textLines":1,"bbox":[242,410,328,54]}
+{"kind":"shape","id":"sh/1gnyhc7a","slide":14,"bbox":[104,478,466,0]}
+{"kind":"textbox","id":"sh/hkvmp4fm","slide":14,"text":"implemented + demonstrated","textPreview":"implemented + demonstrated","textChars":26,"textLines":1,"bbox":[104,488,466,26]}
+{"kind":"shape","id":"sh/gzm5wje1","slide":14,"bbox":[676,390,520,142]}
+{"kind":"textbox","id":"sh/fyd4nexg","slide":14,"text":"OOP","textPreview":"OOP","textChars":3,"textLines":1,"bbox":[700,410,130,54]}
+{"kind":"textbox","id":"sh/ux4nu9wb","slide":14,"text":"interfaces • modules","textPreview":"interfaces • modules","textChars":20,"textLines":1,"bbox":[838,410,328,54]}
+{"kind":"shape","id":"sh/povmtovy","slide":14,"bbox":[700,478,466,0]}
+{"kind":"textbox","id":"sh/4nm50jed","slide":14,"text":"implemented + demonstrated","textPreview":"implemented + demonstrated","textChars":26,"textLines":1,"bbox":[700,488,466,26]}
+{"kind":"shape","id":"sh/3md4rexs","slide":14,"bbox":[160,570,960,48]}
+{"kind":"textbox","id":"sh/2l4ny9w7","slide":14,"text":"JAY: durability  •  SANCHIT: policies + TX  •  NIKHIL: index + QA","textPreview":"JAY: durability  •  SANCHIT: policies + TX  •  NIKHIL: index + QA","textChars":65,"textLines":1,"bbox":[182,576,916,34]}
+{"kind":"textbox","id":"sh/dsfmxovu","slide":14,"text":"NIKHIL","textPreview":"NIKHIL","textChars":6,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/cr6543e9","slide":14,"text":"//  4 OF 5","textPreview":"//  4 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/fy6hev","slide":14,"text":"Use this slide to connect the implementation to the syllabus and to make ownership clear. Emphasize that the final system was integrated and tested as one product, not three disconnected modules.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}
+{"kind":"slide","id":"sl/c9napc","slide":15,"title":"CONCLUSION","textShapes":13}
+{"kind":"shape","id":"sh/ex8r2983","slide":15,"bbox":[0,0,1280,10]}
+{"kind":"textbox","id":"sh/10jqdoru","slide":15,"text":"CONCLUSION","textPreview":"CONCLUSION","textChars":10,"textLines":1,"bbox":[890,676,260,22]}
+{"kind":"textbox","id":"sh/0zq94jq9","slide":15,"text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1160,671,56,30]}
+{"kind":"textbox","id":"sh/nm18fy90","slide":15,"text":"PROJECT STATUS","textPreview":"PROJECT STATUS","textChars":14,"textLines":1,"bbox":[64,58,340,30]}
+{"kind":"textbox","id":"sh/m1sr6t8f","slide":15,"text":"READY.","textPreview":"READY.","textChars":6,"textLines":1,"bbox":[64,118,700,128]}
+{"kind":"textbox","id":"sh/9ojqhorq","slide":15,"text":"Not a proposal. A working system.","textPreview":"Not a proposal. A working system.","textChars":33,"textLines":1,"bbox":[70,266,700,44]}
+{"kind":"shape","id":"sh/ona98jq5","slide":15,"bbox":[70,382,240,0]}
+{"kind":"textbox","id":"sh/bq1sjypw","slide":15,"text":"FAST","textPreview":"FAST","textChars":4,"textLines":1,"bbox":[70,404,240,42]}
+{"kind":"shape","id":"sh/apsrat8b","slide":15,"bbox":[358,382,240,0]}
+{"kind":"textbox","id":"sh/s3up4zu5","slide":15,"text":"DURABLE","textPreview":"DURABLE","textChars":7,"textLines":1,"bbox":[358,404,240,42]}
+{"kind":"shape","id":"sh/t43qd4vq","slide":15,"bbox":[646,382,240,0]}
+{"kind":"textbox","id":"sh/61c72pcf","slide":15,"text":"ATOMIC","textPreview":"ATOMIC","textChars":6,"textLines":1,"bbox":[646,404,240,42]}
+{"kind":"shape","id":"sh/72l8bud0","slide":15,"bbox":[934,382,240,0]}
+{"kind":"textbox","id":"sh/g7u98zuh","slide":15,"text":"TESTED","textPreview":"TESTED","textChars":6,"textLines":1,"bbox":[934,404,240,42]}
+{"kind":"shape","id":"sh/h8nq14v2","slide":15,"bbox":[70,500,1136,86]}
+{"kind":"textbox","id":"sh/u5c769cb","slide":15,"text":"$ java -jar persistent-cache-1.0.0.jar","textPreview":"$ java -jar persistent-cache-1.0.0.jar","textChars":38,"textLines":1,"bbox":[102,516,760,50]}
+{"kind":"shape","id":"sh/f6l8fudw","slide":15,"bbox":[950,526,210,32]}
+{"kind":"textbox","id":"sh/4ve9cjud","slide":15,"text":"LIVE DEMO","textPreview":"LIVE DEMO","textChars":9,"textLines":1,"bbox":[960,527,190,29]}
+{"kind":"textbox","id":"sh/pwnq5ovy","slide":15,"text":"NIKHIL","textPreview":"NIKHIL","textChars":6,"textLines":1,"bbox":[64,676,120,22]}
+{"kind":"textbox","id":"sh/dsjqpo32","slide":15,"text":"//  5 OF 5","textPreview":"//  5 OF 5","textChars":10,"textLines":1,"bbox":[168,676,150,22]}
+{"kind":"notes","id":"nt/c9napc","slide":15,"text":"Resolve the opening promise: the system is fast, durable, atomic, and tested. This is the moment to launch the JAR and invite the evaluator to choose a crash or workload scenario.\n\n[Sources]\n- Local project source code, README, automated test output, and benchmark output."}

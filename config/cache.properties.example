@@ -1,0 +1,9 @@
+# Example JVM system-property values. Pass them with -Dkey=value.
+cache.wal=data/cache-v2.wal
+cache.snapshot=data/cache.snapshot
+cache.audit=data/cache-events.jsonl
+cache.durability=ALWAYS
+cache.events.async=true
+cache.events.capacity=256
+cache.tx.timeout.ms=30000
+cache.expiry.sweep.ms=1000

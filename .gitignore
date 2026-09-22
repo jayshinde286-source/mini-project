@@ -1,0 +1,15 @@
+target/
+data/*.wal
+data/*.snapshot
+data/*.jsonl
+.DS_Store
+*.class
+*.log
+.idea/
+.vscode/
+node_modules/
+Phase2/node_modules/
+Phase2/dist/
+.vercel/
+*.env
+
