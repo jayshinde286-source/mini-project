@@ -58,7 +58,7 @@ export const PersistencePage = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="status-dot green"></span>
-            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--status-green)', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
               {persistenceOverview.persistenceStatus}
             </span>
           </div>
@@ -73,7 +73,7 @@ export const PersistencePage = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="status-dot green"></span>
-            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--status-green)', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
               {persistenceOverview.walStatus}
             </span>
           </div>
@@ -88,7 +88,7 @@ export const PersistencePage = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="status-dot blue"></span>
-            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-blue)', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
               {persistenceOverview.snapshotStatus}
             </span>
           </div>
@@ -101,7 +101,7 @@ export const PersistencePage = () => {
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
             WAL Records
           </div>
-          <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
             {walRecords.length.toLocaleString()}
           </div>
           <span style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
@@ -154,7 +154,7 @@ export const PersistencePage = () => {
         }}>
           <div>
             <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Current Snapshot</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--accent-purple)', fontSize: '0.9rem' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
               {snapshot.id}
             </div>
           </div>
@@ -168,7 +168,7 @@ export const PersistencePage = () => {
 
           <div>
             <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Entries</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--status-green)' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)' }}>
               {snapshot.entriesCount}
             </div>
           </div>

@@ -1,30 +1,35 @@
 # PERSISTENT EVENT-DRIVEN MEMORY CACHE MODULE
+**Academic Mini Project (PR1) — Third-Year B.Tech Computer Engineering (Semester V / VI)**  
+**Sardar Patel Institute of Technology (SPIT), Andheri (W), Mumbai**  
+**Department of Computer Science and Engineering | Academic Year: 2026–27**  
 
-A professional Java 17 mini-project that combines an in-memory key/value engine with durable recovery, ordered domain events, observable metrics, TTL expiry, optimistic concurrency, atomic transactions, snapshots, WAL compaction, range queries, and two bounded eviction algorithms.
+### Project Team & Supervision
+* **Jay Shinde** — UID: `2024800115`
+* **Nikhil Shelar** — UID: `2024800113`
+* **Sanchit Gaikwad** — UID: `2024800029`
+* **Faculty Guide**: **Prof. Suhas Kakade**
 
-The implementation is dependency-free so it can compile in a college laboratory with only a JDK, while the architecture follows production ideas such as separation of concerns, immutable records, append-only logs, checksums, event subscribers, lifecycle ownership, health validation, and automated failure tests.
+---
 
-## Main objective
+> ### 📘 MASTER EVALUATION & PROJECT GUIDES
+> **For evaluators, viva examiners, and students:**  
+> 1. **[HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md](file:///Users/jayshinde/Documents/mini%20project/HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md)** — Explaining what the project is in simple words, the problem it solves, end-to-end operational workflows, byte-level persistence, and **top 15 viva questions and answers**.  
+> 2. **[CHAT.md](file:///Users/jayshinde/Documents/mini%20project/CHAT.md)** — **Full Viva Defense Interview Script**: A realistic conversational dialogue between the Faculty Examiner and the Student team covering the entire viva from opening pitch to 50/50 grading!
 
-Design and implement a fast memory-resident cache module that does not lose acknowledged updates after a process crash, emits ordered events for observability and extension, supports safe concurrent updates and atomic multi-key transactions, and can rebuild a consistent queryable state from snapshots plus a checksummed write-ahead log.
+---
 
-## What makes version 3 ESE-ready
+## Official SPIT Phase-Wise Evaluation Navigation
 
-| Area | Professional capability |
-|---|---|
-| Durability | Versioned V2 WAL, monotonic sequence numbers, per-record CRC32, SHA-256 transaction manifests, configurable fsync policy |
-| Recovery | Snapshot-first recovery, all-or-nothing verified transaction batches, TTL-aware replay, explicit corruption counters |
-| Event-driven design | Ordered event bus, synchronous/asynchronous modes, isolated listener failures, recent-event journal |
-| Observability | Event-derived hit/miss/write/transaction/snapshot metrics and JSON Lines audit trail |
-| Consistency | WAL-before-memory rule, version-aware idempotent replay, compare-and-set, health/invariant checks |
-| Transactions | Buffered multi-key writes, exclusive per-key locks, batched durable commit, rollback, timeout cleanup |
-| Time-aware caching | Per-key TTL, lazy expiry on reads, background sweeper, no resurrection after restart |
-| Querying | Exact lookup in a map plus inclusive ordered range scans through a real B-tree |
-| Memory algorithms | O(1)-average LRU and LFU implementations with LRU tie-breaking and eviction counters |
-| Operations | Checkpoint, WAL compaction, recovery report, metrics, event inspection, CLI demo commands |
-| Deployment safety | An OS-backed exclusive lock prevents two JVMs/processes from writing the same WAL |
-| Evaluation evidence | A single `DIAGNOSTICS`/`EVIDENCE` command reports health, recovery, storage, metrics, and event delivery |
-| Verification | Twenty-two dependency-free tests covering algorithms, batch corruption, writer exclusion, crash recovery, concurrency and CLI |
+| Academic Phase | Marks | Status | Primary Documentation & Folder |
+|---|---|---|---|
+| **Phase 1: Core Engine** | — | Completed | [`phase-1/`](file:///Users/jayshinde/Documents/mini%20project/phase-1) — Java 17 In-Memory Cache Core |
+| **Phase 2: Architecture & Design** | **25 Marks** | **100% Complete** | [`Phase2/`](file:///Users/jayshinde/Documents/mini%20project/Phase2) — [SRS.md (10M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/SRS.md) • [UML Diagrams (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/UML_DIAGRAMS.md) • [Algorithm Design (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/ALGORITHM_DESIGN.md) • [Feature Docs](file:///Users/jayshinde/Documents/mini%20project/Phase2/PHASE_2_FEATURE_DOCUMENTATION.md) • Web Console |
+| **Phase 3: Implementation** | **25 Marks** | **100% Complete** | [`Phase_3/`](file:///Users/jayshinde/Documents/mini%20project/Phase_3) — [Module Coding (10M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/backend) • [Git Setup (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/README.md) • [Branching Strategy (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/README.md) • [40 Viva Q&A](file:///Users/jayshinde/Documents/mini%20project/Phase_3/PROJECT_DOCUMENTATION.md) • [100 Technical Q&A](file:///Users/jayshinde/Documents/mini%20project/Phase_3/PROJECT_VIVA_100_QA.md) • [Phase 4 Roadmap PDF](file:///Users/jayshinde/Documents/mini%20project/Phase_3/Phase_4_Roadmap.pdf) |
+
+---
+
+## Main Objective
+Design and implement a fast memory-resident cache module that does not lose acknowledged updates after a process crash, emits ordered events for observability and extension, supports safe concurrent updates, and can rebuild a consistent queryable state from snapshots plus a checksummed write-ahead log.
 
 ## Architecture
 

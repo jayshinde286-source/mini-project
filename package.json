@@ -1,0 +1,12 @@
+{
+  "name": "spit-cache-root",
+  "version": "3.0.0",
+  "description": "Persistent Event-Driven In-Memory Cache Engine — SPIT Academic Mini Project",
+  "scripts": {
+    "server": "node Phase_3/backend/src/server.js",
+    "frontend": "npm --prefix Phase2 run dev",
+    "start": "node Phase_3/backend/src/server.js & npm --prefix Phase2 run dev",
+    "test:phase3": "node Phase_3/tests/run_tests.js",
+    "build": "npm --prefix Phase2 run build"
+  }
+}

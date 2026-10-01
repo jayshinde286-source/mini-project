@@ -164,7 +164,7 @@ export const MetricsPage = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
           <div style={{ backgroundColor: 'var(--bg-tertiary)', padding: '16px', borderRadius: 'var(--radius-sm)' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>CACHE HIT RATE</div>
-            <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--status-green)', margin: '4px 0' }}>
+            <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', margin: '4px 0' }}>
               85.0%
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
@@ -174,7 +174,7 @@ export const MetricsPage = () => {
 
           <div style={{ backgroundColor: 'var(--bg-tertiary)', padding: '16px', borderRadius: 'var(--radius-sm)' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>AVERAGE RESPONSE TIME</div>
-            <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)', margin: '4px 0' }}>
+            <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', margin: '4px 0' }}>
               1.8 ms
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>

@@ -4,7 +4,7 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
   const colorMap = {
     blue: {
       bg: 'var(--accent-blue-subtle)',
-      border: 'rgba(59, 130, 246, 0.3)',
+      border: 'var(--border-default)',
       text: 'var(--accent-blue)'
     },
     green: {
@@ -24,12 +24,12 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
     },
     purple: {
       bg: 'var(--accent-purple-subtle)',
-      border: 'rgba(139, 92, 246, 0.3)',
+      border: 'var(--border-default)',
       text: 'var(--accent-purple)'
     },
     cyan: {
       bg: 'var(--accent-cyan-subtle)',
-      border: 'rgba(6, 182, 212, 0.3)',
+      border: 'var(--border-default)',
       text: 'var(--accent-cyan)'
     }
   };
@@ -44,17 +44,18 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
         </span>
         {Icon && (
           <div style={{
-            width: '28px',
-            height: '28px',
+            width: '32px',
+            height: '32px',
             borderRadius: 'var(--radius-sm)',
             backgroundColor: theme.bg,
             border: `1px solid ${theme.border}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: theme.text
+            color: theme.text,
+            boxShadow: `0 0 12px ${theme.bg}`
           }}>
-            <Icon size={15} />
+            <Icon size={16} />
           </div>
         )}
       </div>

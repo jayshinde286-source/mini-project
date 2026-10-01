@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { initialCacheEntries, initialEvictionStats } from '../data/mockCacheData';
 import { initialEvents } from '../data/mockEvents';
 import { initialMetrics, initialHealthStatus, generateInitialActivityHistory } from '../data/mockMetrics';
-import { initialPersistenceOverview, initialWalRecords, initialSnapshot, initialRecoveryStatus } from '../data/mockPersistence';
+import { initialPersistenceOverview, initialWalRecords, initialSnapshot, initialRecoveryStatus, createRealWalRecord } from '../data/mockPersistence';
 import { initialAuditLogs } from '../data/mockAudit';
 import { cacheService } from '../services/cacheService';
 import { persistenceService } from '../services/persistenceService';
 import { eventService } from '../services/eventService';
 import { recoveryService } from '../services/recoveryService';
+import { crc32Hex } from '../utils/checksum';
 
 const CacheContext = createContext(null);
 
@@ -18,6 +19,8 @@ export const useCache = () => {
   }
   return context;
 };
+
+const BACKEND_URL = (typeof window !== 'undefined' && window.__SPIT_BACKEND_URL__) || 'http://localhost:8080';
 
 export const CacheProvider = ({ children }) => {
   const [cacheEntries, setCacheEntries] = useState(initialCacheEntries);
@@ -34,26 +37,241 @@ export const CacheProvider = ({ children }) => {
   const [activityHistory, setActivityHistory] = useState(generateInitialActivityHistory);
   const [liveSimulation, setLiveSimulation] = useState(false);
   const [toasts, setToasts] = useState([]);
-  const [startTime] = useState(Date.now() - 4820000); // 1h 20m ago
+  const [startTime] = useState(Date.now());
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
+  const [backendMeta, setBackendMeta] = useState(null);
 
-  const nextWalSequence = useRef(2432);
-  const nextEventId = useRef(1046);
-  const nextAuditId = useRef(902);
+  // Modern Theme State (Dark / Light)
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('spit_cache_theme');
+    if (saved === 'black') return 'dark';
+    if (saved === 'white') return 'light';
+    return saved || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('spit_cache_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    addToast(
+      'Theme Updated',
+      `Switched to ${nextTheme === 'dark' ? 'Modern Obsidian Dark' : 'Clean Slate Light'} mode.`,
+      'info'
+    );
+  };
+
+  const nextWalSequence = useRef(1);
+  const nextEventId = useRef(1);
+  const nextAuditId = useRef(1);
 
   // Toast Helper
-  const addToast = (title, message, type = 'info') => {
+  const addToast = useCallback((title, message, type = 'info') => {
     const id = Date.now() + Math.random();
     setToasts((prev) => [...prev, { id, title, message, type }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 4500);
-  };
+  }, []);
 
   const removeToast = (id) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  // Live timer for TTL countdown and periodic cleanup check
+  // 1. Check Backend Connectivity on Mount and Sync Real Data
+  const checkBackendSync = useCallback(async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+      const healthRes = await fetch(`${BACKEND_URL}/api/health`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (healthRes.ok) {
+        const healthData = await healthRes.json();
+        setIsBackendConnected(true);
+        setBackendMeta(healthData);
+
+        // Fetch Live Metrics
+        const metricsRes = await fetch(`${BACKEND_URL}/api/metrics`);
+        if (metricsRes.ok) {
+          const m = await metricsRes.json();
+          setMetrics({
+            totalEntries: m.activeEntries || 0,
+            hits: m.hits || 0,
+            misses: m.misses || 0,
+            hitRatePercent: m.hitRatePercentage || 0.0,
+            evictions: m.evictions || 0,
+            expirations: m.expirations || 0,
+            walRecords: m.wal?.recordCount || 0,
+            activeEvents: m.activeEntries || 0,
+            totalRequests: m.totalRequests || 0,
+            puts: m.puts || 0,
+            deletes: m.deletes || 0,
+            avgResponseTimeMs: m.latency ? Number((m.latency.avgUs / 1000).toFixed(2)) : 0.0,
+            casSuccesses: 0,
+            casRejections: 0,
+            snapshotsCreated: m.snapshot?.exists ? 1 : 0,
+            recoveriesCompleted: 0
+          });
+
+          // Live Eviction & Capacity telemetry
+          setEvictionStats((prev) => ({
+            ...prev,
+            capacity: m.capacity || 50,
+            currentUsage: m.activeEntries || 0,
+            evictionsCount: m.evictions || 0,
+            lastEvictedKey: m.evictions > 0 ? (m.lastEvictedKey || prev.lastEvictedKey || 'None') : 'None',
+            lastEvictedReason: m.evictions > 0 ? 'LRU Capacity Threshold Exceeded' : 'None'
+          }));
+
+          if (m.wal) {
+            setPersistenceOverview((prev) => ({
+              ...prev,
+              walRecordsCount: m.wal.recordCount,
+              currentLsn: m.wal.currentLsn,
+              fileSizeBytes: m.wal.fileSizeBytes
+            }));
+          }
+
+          if (m.snapshot && m.snapshot.exists) {
+            setSnapshot({
+              id: `snapshot_checkpoint_${m.snapshot.checkpointLsn}`,
+              version: m.snapshot.checkpointLsn,
+              entriesCount: m.snapshot.entryCount,
+              createdAt: m.snapshot.timestamp,
+              checksum: m.snapshot.checksum,
+              status: 'VALID',
+              sizeBytes: `${(m.snapshot.fileSizeBytes / 1024).toFixed(1)} KB`
+            });
+          }
+        }
+
+        // Fetch Live Cache Entries
+        const cacheRes = await fetch(`${BACKEND_URL}/api/cache`);
+        if (cacheRes.ok) {
+          const cData = await cacheRes.json();
+          if (Array.isArray(cData.entries)) {
+            setCacheEntries(cData.entries.map((e) => ({
+              key: e.key,
+              value: typeof e.value === 'object' ? JSON.stringify(e.value) : String(e.value),
+              version: 1,
+              createdAt: e.createdAt,
+              lastAccessed: e.lastAccessed || e.createdAt,
+              accessCount: e.accessCount || 1,
+              expiresAt: e.expiresAt || 0,
+              status: e.expiresAt > 0 && Date.now() > e.expiresAt ? 'EXPIRED' : 'ACTIVE'
+            })));
+          }
+        }
+
+        // Fetch Live WAL
+        const walRes = await fetch(`${BACKEND_URL}/api/wal`);
+        if (walRes.ok) {
+          const wData = await walRes.json();
+          if (Array.isArray(wData.records)) {
+            setWalRecords(wData.records.map((r) => ({
+              sequence: r.lsn,
+              timestamp: r.timestamp,
+              transactionId: `TXN-${String(r.lsn).padStart(6, '0')}`,
+              operation: r.opcode,
+              key: r.key,
+              value: typeof r.value === 'object' ? JSON.stringify(r.value) : String(r.value || ''),
+              expiresAt: r.ttlSeconds > 0 ? r.timestamp + r.ttlSeconds * 1000 : 0,
+              checksum: '0x' + (r.checksum || '00000000'),
+              status: 'VALID'
+            })).reverse());
+          }
+        }
+
+        // Fetch Live Audit Logs
+        const auditRes = await fetch(`${BACKEND_URL}/api/audit`);
+        if (auditRes.ok) {
+          const aData = await auditRes.json();
+          if (Array.isArray(aData.logs)) {
+            setAuditLogs(aData.logs.map((a) => ({
+              logId: `AUD-${a.sequence}`,
+              timestamp: new Date(a.timestamp).getTime(),
+              operation: a.action,
+              key: a.target,
+              actor: a.actor,
+              status: 'SUCCESS',
+              details: `Hash: ${a.hash ? a.hash.slice(0, 16) + '...' : 'Verified'}`
+            })));
+          }
+        }
+
+        // Fetch Live Events
+        const eventsRes = await fetch(`${BACKEND_URL}/api/events?limit=50`);
+        if (eventsRes.ok) {
+          const eData = await eventsRes.json();
+          if (Array.isArray(eData.events)) {
+            setEvents(eData.events.map((ev) => ({
+              eventId: ev.id,
+              timestamp: ev.timestamp,
+              type: ev.type,
+              key: ev.data?.key || ev.data?.target || 'SYSTEM',
+              source: 'Cache Engine',
+              transactionId: ev.data?.lsn ? `TXN-${String(ev.data.lsn).padStart(6, '0')}` : '',
+              status: 'SUCCESS',
+              detail: typeof ev.data === 'object' ? JSON.stringify(ev.data) : String(ev.data || '')
+            })));
+          }
+        }
+      } else {
+        setIsBackendConnected(false);
+      }
+    } catch (e) {
+      setIsBackendConnected(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkBackendSync();
+    const interval = setInterval(checkBackendSync, 5000); // Live sync every 5s
+    return () => clearInterval(interval);
+  }, [checkBackendSync]);
+
+  // Real-Time Server-Sent Events (SSE) Listener for Zero Latency Push Updates
+  useEffect(() => {
+    if (!isBackendConnected) return;
+    let eventSource;
+    try {
+      eventSource = new EventSource(`${BACKEND_URL}/api/events/stream`);
+      eventSource.onmessage = (event) => {
+        try {
+          const ev = JSON.parse(event.data);
+          if (ev && ev.type) {
+            const formatted = {
+              eventId: ev.id || `EVT-${Date.now()}`,
+              timestamp: ev.timestamp || Date.now(),
+              type: ev.type,
+              key: ev.data?.key || ev.data?.target || 'SYSTEM',
+              source: 'Cache Engine',
+              transactionId: ev.data?.lsn ? `TXN-${String(ev.data.lsn).padStart(6, '0')}` : '',
+              status: 'SUCCESS',
+              detail: typeof ev.data === 'object' ? JSON.stringify(ev.data) : String(ev.data || '')
+            };
+            setEvents((prev) => [formatted, ...prev.filter(x => x.eventId !== formatted.eventId)].slice(0, 100));
+            // Trigger instant synchronization of metrics and cache entries
+            checkBackendSync();
+          }
+        } catch (err) {}
+      };
+      eventSource.onerror = () => {
+        if (eventSource) eventSource.close();
+      };
+    } catch (e) {}
+
+    return () => {
+      if (eventSource) eventSource.close();
+    };
+  }, [isBackendConnected, checkBackendSync]);
+
+  // Live timer for TTL countdown
   useEffect(() => {
     const timer = setInterval(() => {
       setCacheEntries((prev) =>
@@ -71,14 +289,36 @@ export const CacheProvider = ({ children }) => {
   // SET Cache Entry Operation
   const setEntry = async (key, value, ttl = 0, unit = 'seconds') => {
     try {
-      const result = await cacheService.set(key, value, ttl, unit);
+      const ttlSec = unit === 'minutes' ? Number(ttl) * 60 : (unit === 'hours' ? Number(ttl) * 3600 : Number(ttl));
       const now = Date.now();
+
+      // If live backend connected, forward request directly
+      if (isBackendConnected) {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/cache`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key, value, ttlSeconds: ttlSec })
+          });
+          if (!res.ok) {
+            const errJson = await res.json();
+            throw new Error(errJson.message || errJson.error || 'Backend PUT rejected');
+          }
+          await checkBackendSync();
+          addToast('Cache Set Success', `Key '${key}' committed to WAL & memory store.`, 'success');
+          return { success: true };
+        } catch (backendErr) {
+          console.warn('Backend PUT failed, falling back to local engine:', backendErr.message);
+        }
+      }
+
+      // Local In-Browser Reactive Engine
+      const result = await cacheService.set(key, value, ttl, unit);
       const seq = nextWalSequence.current++;
       const evId = nextEventId.current++;
       const audId = nextAuditId.current++;
       const txnId = `TXN-${String(seq).padStart(6, '0')}`;
 
-      // Update Cache Entries
       setCacheEntries((prev) => {
         const existingIdx = prev.findIndex((e) => e.key === result.key);
         const newEntry = {
@@ -101,11 +341,9 @@ export const CacheProvider = ({ children }) => {
         }
       });
 
-      // Update WAL
       const newWal = persistenceService.createWalRecord(seq, 'SET', result.key, result.value, result.expiresAt, txnId);
       setWalRecords((prev) => [newWal, ...prev]);
 
-      // Update Event Stream
       const newEvent = eventService.createEvent(
         'CACHE_SET',
         result.key,
@@ -117,7 +355,6 @@ export const CacheProvider = ({ children }) => {
       newEvent.eventId = evId;
       setEvents((prev) => [newEvent, ...prev]);
 
-      // Update Audit Log
       const auditEntry = {
         logId: `AUD-${audId}`,
         timestamp: now,
@@ -129,7 +366,6 @@ export const CacheProvider = ({ children }) => {
       };
       setAuditLogs((prev) => [auditEntry, ...prev]);
 
-      // Update Metrics
       setMetrics((prev) => {
         const newPuts = prev.puts + 1;
         const newTotalReqs = prev.totalRequests + 1;
@@ -143,19 +379,16 @@ export const CacheProvider = ({ children }) => {
         };
       });
 
-      // Update Eviction capacity usage
       setEvictionStats((prev) => ({
         ...prev,
         currentUsage: prev.currentUsage + 1
       }));
 
-      // Update chart activity
       updateActivityTrend('SET');
-
       addToast('Cache Set Success', `Key '${result.key}' persisted & cached.`, 'success');
       return { success: true, entry: result };
     } catch (err) {
-      addToast('Cache Set Failed', err.message, 'error');
+      addToast('Operation Failed', err.message, 'error');
       throw err;
     }
   };
@@ -163,10 +396,30 @@ export const CacheProvider = ({ children }) => {
   // GET Cache Entry Operation
   const getEntry = async (key) => {
     try {
-      const now = Date.now();
       const validKey = key?.trim();
       if (!validKey) throw new Error('Key cannot be empty');
+      const now = Date.now();
 
+      // If backend connected, perform real HTTP lookup
+      if (isBackendConnected) {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/cache/${encodeURIComponent(validKey)}`);
+          if (res.ok) {
+            const data = await res.json();
+            await checkBackendSync();
+            addToast('Cache Hit', `Found '${validKey}' in memory store.`, 'success');
+            return { hit: true, entry: { key: data.key, value: data.value } };
+          } else {
+            await checkBackendSync();
+            addToast('Cache Miss', `Key '${validKey}' not found or expired.`, 'warning');
+            return { hit: false };
+          }
+        } catch (e) {
+          console.warn('Backend GET failed, falling back to local engine');
+        }
+      }
+
+      // Local engine lookup
       const existing = cacheEntries.find((e) => e.key === validKey);
       const isExpired = existing && existing.expiresAt > 0 && now >= existing.expiresAt;
       const isHit = existing && !isExpired && existing.status === 'ACTIVE';
@@ -175,7 +428,6 @@ export const CacheProvider = ({ children }) => {
       const audId = nextAuditId.current++;
 
       if (isHit) {
-        // Record Hit
         setCacheEntries((prev) =>
           prev.map((e) =>
             e.key === validKey
@@ -224,14 +476,13 @@ export const CacheProvider = ({ children }) => {
         addToast('Cache Hit', `Found '${validKey}' in memory store.`, 'success');
         return { hit: true, entry: existing };
       } else {
-        // Record Miss
         const newEvent = eventService.createEvent(
           'CACHE_MISS',
           validKey,
-          `Key ${validKey} not found in primary cache or expired`,
+          isExpired ? `Key ${validKey} expired prior to read` : `Key ${validKey} not found in index`,
           '',
           'Cache Engine',
-          'MISS'
+          'WARNING'
         );
         newEvent.eventId = evId;
         setEvents((prev) => [newEvent, ...prev]);
@@ -243,8 +494,8 @@ export const CacheProvider = ({ children }) => {
             operation: 'GET',
             key: validKey,
             actor: 'Client API',
-            status: 'MISS',
-            details: `Cache miss for key ${validKey}`
+            status: 'FAILED',
+            details: `Cache miss: ${isExpired ? 'expired TTL' : 'non-existent key'}`
           },
           ...prev
         ]);
@@ -252,7 +503,7 @@ export const CacheProvider = ({ children }) => {
         setMetrics((prev) => {
           const newMisses = prev.misses + 1;
           const totalHitsMisses = prev.hits + newMisses;
-          const hitRate = (prev.hits / totalHitsMisses) * 100;
+          const hitRate = totalHitsMisses > 0 ? (prev.hits / totalHitsMisses) * 100 : 0.0;
           return {
             ...prev,
             misses: newMisses,
@@ -262,11 +513,11 @@ export const CacheProvider = ({ children }) => {
         });
 
         updateActivityTrend('MISS');
-        addToast('Cache Miss', `Key '${validKey}' does not exist or expired.`, 'warning');
-        return { hit: false, key: validKey };
+        addToast('Cache Miss', `Key '${validKey}' not found or expired.`, 'warning');
+        return { hit: false };
       }
     } catch (err) {
-      addToast('Lookup Error', err.message, 'error');
+      addToast('Lookup Failed', err.message, 'error');
       throw err;
     }
   };
@@ -274,8 +525,23 @@ export const CacheProvider = ({ children }) => {
   // DELETE Cache Entry Operation
   const deleteEntry = async (key) => {
     try {
-      await cacheService.delete(key);
       const now = Date.now();
+
+      if (isBackendConnected) {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/cache/${encodeURIComponent(key)}`, {
+            method: 'DELETE'
+          });
+          if (res.ok) {
+            await checkBackendSync();
+            addToast('Entry Deleted', `Key '${key}' removed from backend cache.`, 'info');
+            return { success: true };
+          }
+        } catch (e) {
+          console.warn('Backend DELETE failed, using local');
+        }
+      }
+
       const seq = nextWalSequence.current++;
       const evId = nextEventId.current++;
       const audId = nextAuditId.current++;
@@ -283,15 +549,13 @@ export const CacheProvider = ({ children }) => {
 
       setCacheEntries((prev) => prev.filter((e) => e.key !== key));
 
-      // WAL Tombstone Record
       const newWal = persistenceService.createWalRecord(seq, 'DELETE', key, '', 0, txnId);
       setWalRecords((prev) => [newWal, ...prev]);
 
-      // Event
       const newEvent = eventService.createEvent(
         'CACHE_DELETE',
         key,
-        `Tombstone recorded for ${key} in WAL and removed from map`,
+        `Explicit eviction/delete requested for key ${key}`,
         txnId,
         'Cache Engine',
         'SUCCESS'
@@ -299,7 +563,6 @@ export const CacheProvider = ({ children }) => {
       newEvent.eventId = evId;
       setEvents((prev) => [newEvent, ...prev]);
 
-      // Audit
       setAuditLogs((prev) => [
         {
           logId: `AUD-${audId}`,
@@ -308,12 +571,11 @@ export const CacheProvider = ({ children }) => {
           key,
           actor: 'Client API',
           status: 'SUCCESS',
-          details: `Entry ${key} deleted and tombstone committed to WAL (seq ${seq})`
+          details: `Tombstone marker logged in WAL for key ${key}`
         },
         ...prev
       ]);
 
-      // Metrics
       setMetrics((prev) => ({
         ...prev,
         deletes: prev.deletes + 1,
@@ -322,7 +584,6 @@ export const CacheProvider = ({ children }) => {
         walRecords: prev.walRecords + 1
       }));
 
-      // Eviction usage update
       setEvictionStats((prev) => ({
         ...prev,
         currentUsage: Math.max(0, prev.currentUsage - 1)
@@ -337,10 +598,27 @@ export const CacheProvider = ({ children }) => {
     }
   };
 
-  // Simulate TTL Expiry
-  const simulateTTLExpiry = () => {
+  // Simulate TTL Expiry with Real Backend Integration
+  const simulateTTLExpiry = async () => {
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/demo/run-scenario`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenario: 'ttl' })
+        });
+        if (res.ok) {
+          await checkBackendSync();
+          addToast('TTL Expiry Triggered', 'Inserted 5 keys with 3-second TTL for active sweep validation.', 'warning');
+          return;
+        }
+      } catch (backendErr) {
+        console.warn('Backend TTL scenario failed, using local fallback:', backendErr.message);
+      }
+    }
+
     const activeEntry = cacheEntries.find((e) => e.status === 'ACTIVE' && e.expiresAt > 0);
-    const keyToExpire = activeEntry ? activeEntry.key : 'temp:token:44';
+    const keyToExpire = activeEntry ? activeEntry.key : (cacheEntries[0]?.key || 'session:test');
     const now = Date.now();
     const evId = nextEventId.current++;
     const audId = nextAuditId.current++;
@@ -381,15 +659,31 @@ export const CacheProvider = ({ children }) => {
     addToast('TTL Expiry Triggered', `Entry '${keyToExpire}' marked EXPIRED.`, 'warning');
   };
 
-  // Simulate LRU Eviction
-  const simulateEviction = () => {
+  // Simulate LRU Eviction with Real Backend Integration
+  const simulateEviction = async () => {
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/demo/run-scenario`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenario: 'lru' })
+        });
+        if (res.ok) {
+          await checkBackendSync();
+          addToast('LRU Eviction Triggered', 'Inserted 55 keys to exceed capacity and trigger real LRU evictions.', 'warning');
+          return;
+        }
+      } catch (backendErr) {
+        console.warn('Backend LRU scenario failed, using local fallback:', backendErr.message);
+      }
+    }
+
     const activeEntries = cacheEntries.filter((e) => e.status === 'ACTIVE');
     if (activeEntries.length === 0) {
       addToast('Eviction Skipped', 'No active entries available to evict.', 'info');
       return;
     }
 
-    // Pick least recently accessed
     const victim = [...activeEntries].sort((a, b) => a.lastAccessed - b.lastAccessed)[0];
     const now = Date.now();
     const evId = nextEventId.current++;
@@ -402,7 +696,7 @@ export const CacheProvider = ({ children }) => {
     const newEvent = eventService.createEvent(
       'CACHE_EVICTED',
       victim.key,
-      `Evicted from LRU cache head due to mock capacity threshold`,
+      `Evicted from LRU cache head due to capacity threshold`,
       '',
       'Eviction Manager',
       'EVICTED'
@@ -441,22 +735,79 @@ export const CacheProvider = ({ children }) => {
     addToast('Cache Eviction', `Key '${victim.key}' evicted by LRU manager.`, 'warning');
   };
 
-  // Simulate Snapshot Creation
-  const simulateSnapshot = () => {
+  // Clear All Entries with Real Backend Integration
+  const clearEntries = async () => {
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/cache/clear`, { method: 'POST' });
+        if (res.ok) {
+          await checkBackendSync();
+          addToast('Cache Flushed', 'All in-memory cache entries cleared in backend.', 'info');
+          return { success: true };
+        }
+      } catch (e) {
+        console.warn('Backend clear failed:', e.message);
+      }
+    }
+    setCacheEntries([]);
+    addToast('Cache Flushed', 'In-memory entries cleared.', 'info');
+    return { success: true };
+  };
+
+  // Simulate Dirty Crash (Volatile Heap Purge)
+  const simulateCrash = async () => {
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/recovery/crash-simulate`, { method: 'POST' });
+        if (res.ok) {
+          await checkBackendSync();
+          addToast('Dirty Crash Simulated', 'Volatile heap memory purged. Persistent WAL & snapshot files remain intact!', 'warning');
+          return { success: true };
+        }
+      } catch (e) {
+        console.warn('Backend crash simulate failed:', e.message);
+      }
+    }
+    setCacheEntries([]);
+    addToast('Dirty Crash Simulated', 'Memory state purged.', 'warning');
+    return { success: true };
+  };
+
+  // Trigger Point-in-time Snapshot
+  const simulateSnapshot = async () => {
     const now = Date.now();
+
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/wal/snapshot`, { method: 'POST' });
+        if (res.ok) {
+          const snapData = await res.json();
+          await checkBackendSync();
+          addToast('Snapshot Created', `Point-in-time snapshot LSN ${snapData.checkpointLsn} created on disk.`, 'success');
+          return;
+        }
+      } catch (e) {
+        console.warn('Backend snapshot failed, using local');
+      }
+    }
+
     const evId = nextEventId.current++;
     const audId = nextAuditId.current++;
     const newVersion = snapshot.version + 1;
     const snapId = `snapshot_${new Date().toISOString().slice(0, 10).replace(/-/g, '_')}_${String(newVersion).padStart(4, '0')}`;
+    const activeItems = cacheEntries.filter((e) => e.status === 'ACTIVE');
+    const serialized = JSON.stringify(activeItems);
+    const checksum = '0x' + crc32Hex(serialized);
+    const byteSize = (new Blob([serialized]).size / 1024).toFixed(1);
 
     const newSnap = {
       id: snapId,
       version: newVersion,
-      entriesCount: cacheEntries.filter((e) => e.status === 'ACTIVE').length,
+      entriesCount: activeItems.length,
       createdAt: now,
-      checksum: '0x' + Math.floor(Math.random() * 0xFFFFFFFF).toString(16).toUpperCase(),
+      checksum,
       status: 'VALID',
-      sizeBytes: `${(24.8 + Math.random() * 2).toFixed(1)} KB`
+      sizeBytes: `${byteSize} KB`
     };
 
     setSnapshot(newSnap);
@@ -485,7 +836,7 @@ export const CacheProvider = ({ children }) => {
         key: 'ALL_KEYS',
         actor: 'System Admin',
         status: 'SUCCESS',
-        details: `Snapshot ${snapId} written successfully to persistence directory`
+        details: `Snapshot ${snapId} written successfully with CRC32 ${checksum}`
       },
       ...prev
     ]);
@@ -502,6 +853,41 @@ export const CacheProvider = ({ children }) => {
   const startRecovery = async () => {
     setRecoveryStatus((prev) => ({ ...prev, status: 'RECOVERING' }));
     addToast('Recovery Started', 'Executing 7-step replay & verification pipeline...', 'info');
+
+    if (isBackendConnected) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/recovery/execute`, { method: 'POST' });
+        if (res.ok) {
+          const recSummary = await res.json();
+          await checkBackendSync();
+          setRecoveryStatus({
+            status: 'READY',
+            lastRecoveryTimestamp: Date.now(),
+            latestSnapshotStatus: recSummary.snapshotFound ? 'VALID' : 'NONE',
+            walIntegrityStatus: 'VALID',
+            recoverableEntries: recSummary.restoredFromSnapshotCount + recSummary.replayedFromWalCount,
+            report: {
+              snapshotEntriesRestored: recSummary.restoredFromSnapshotCount,
+              walOperationsApplied: recSummary.replayedFromWalCount,
+              incompleteTransactionOperationsSkipped: 0,
+              rejectedTransactionBatches: 0,
+              legacyTransactionBatchesAccepted: 0,
+              expiredEntriesSkipped: recSummary.expiredSkippedCount || 0,
+              malformedWalRecords: 0,
+              checksumFailures: 0,
+              snapshotSequence: recSummary.snapshotCheckpointLsn || 0,
+              finalWalSequence: recSummary.lastRecoveredLsn || 0,
+              totalEntriesMaterialized: recSummary.restoredFromSnapshotCount + recSummary.replayedFromWalCount
+            }
+          });
+          setRecoveryStep({ step: 7, name: 'Recovery Complete', detail: `Restored ${recSummary.restoredFromSnapshotCount + recSummary.replayedFromWalCount} keys in ${recSummary.elapsedMs}ms` });
+          addToast('Recovery Complete', `Restored ${recSummary.restoredFromSnapshotCount + recSummary.replayedFromWalCount} keys cleanly from disk!`, 'success');
+          return;
+        }
+      } catch (e) {
+        console.warn('Backend recovery execution failed, using local');
+      }
+    }
 
     try {
       const result = await recoveryService.startRecovery((stepInfo) => {
@@ -579,7 +965,8 @@ export const CacheProvider = ({ children }) => {
   useEffect(() => {
     if (!liveSimulation) return;
     const interval = setInterval(() => {
-      const keys = ['user:1001', 'user:1002', 'session:4421', 'session:8842', 'config:database', 'temp:token:44'];
+      const activeKeys = cacheEntries.filter(e => e.status === 'ACTIVE').map(e => e.key);
+      const keys = activeKeys.length > 0 ? activeKeys : ['demo:active:key'];
       const actions = ['GET_HIT', 'GET_HIT', 'GET_HIT', 'GET_MISS', 'SET'];
       const action = actions[Math.floor(Math.random() * actions.length)];
 
@@ -590,7 +977,7 @@ export const CacheProvider = ({ children }) => {
         getEntry(`unknown:key:${Math.floor(Math.random() * 9000)}`).catch(() => {});
       } else if (action === 'SET') {
         const id = Math.floor(Math.random() * 900) + 100;
-        setEntry(`session:${id}`, `mock_session_state_${id}`, 60, 'seconds').catch(() => {});
+        setEntry(`session:${id}`, `session_state_${id}`, 60, 'seconds').catch(() => {});
       }
     }, 4000);
 
@@ -613,6 +1000,9 @@ export const CacheProvider = ({ children }) => {
     liveSimulation,
     setLiveSimulation,
     uptime: startTime,
+    theme,
+    setTheme,
+    toggleTheme,
     toasts,
     addToast,
     removeToast,
@@ -622,7 +1012,12 @@ export const CacheProvider = ({ children }) => {
     simulateTTLExpiry,
     simulateEviction,
     simulateSnapshot,
-    startRecovery
+    startRecovery,
+    clearEntries,
+    simulateCrash,
+    isBackendConnected,
+    backendMeta,
+    checkBackendSync
   };
 
   return <CacheContext.Provider value={value}>{children}</CacheContext.Provider>;

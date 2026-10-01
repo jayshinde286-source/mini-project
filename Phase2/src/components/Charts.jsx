@@ -94,9 +94,9 @@ export const ActivityChart = ({ data }) => {
         <path
           d={generatePath('gets')}
           fill="none"
-          stroke="var(--accent-blue)"
+          stroke="var(--accent-primary)"
           strokeWidth="1.8"
-          strokeDasharray="3 3"
+          strokeDasharray="4 4"
         />
 
         {/* Sets Line */}
@@ -104,7 +104,7 @@ export const ActivityChart = ({ data }) => {
           d={generatePath('sets')}
           fill="none"
           stroke="var(--accent-cyan)"
-          strokeWidth="2"
+          strokeWidth="1.8"
         />
 
         {/* Misses Line */}
@@ -113,6 +113,7 @@ export const ActivityChart = ({ data }) => {
           fill="none"
           stroke="var(--status-red)"
           strokeWidth="2"
+          strokeDasharray="4 2"
         />
 
         {/* Data points for hits */}
@@ -121,7 +122,7 @@ export const ActivityChart = ({ data }) => {
             key={i}
             cx={getX(i)}
             cy={getY(d.hits)}
-            r="3"
+            r="3.5"
             fill="var(--status-green)"
             stroke="var(--bg-secondary)"
             strokeWidth="1.5"
@@ -160,20 +161,20 @@ export const ActivityChart = ({ data }) => {
         color: 'var(--text-secondary)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--status-green)' }}></span>
-          <span>Cache Hits</span>
+          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--status-green)', boxShadow: '0 0 6px rgba(16, 185, 129, 0.4)' }}></span>
+          <span>Hits (Solid Green)</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--status-red)' }}></span>
-          <span>Cache Misses</span>
+          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', boxShadow: '0 0 6px rgba(99, 102, 241, 0.4)' }}></span>
+          <span>GETs (Dashed Indigo)</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-cyan)' }}></span>
-          <span>SET Ops</span>
+          <span>SETs (Solid Cyan)</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-blue)' }}></span>
-          <span>GET Ops</span>
+          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--status-red)' }}></span>
+          <span>Misses (Dashed Red)</span>
         </div>
       </div>
     </div>
@@ -196,15 +197,14 @@ export const HitRateDonut = ({ hitRate = 85.0, hits = 1842, misses = 326 }) => {
     <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
       <div style={{ position: 'relative', width: size, height: size }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          {/* Background circle (Misses) */}
+          {/* Background circle (Misses / Capacity) */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="var(--status-red)"
+            stroke="var(--bg-tertiary)"
             strokeWidth={strokeWidth}
-            opacity="0.8"
           />
           {/* Foreground circle (Hits) */}
           <circle
@@ -218,7 +218,7 @@ export const HitRateDonut = ({ hitRate = 85.0, hits = 1842, misses = 326 }) => {
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
-            style={{ transition: 'stroke-dashoffset 0.5s ease' }}
+            style={{ transition: 'stroke-dashoffset 0.5s ease', filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.4))' }}
           />
         </svg>
 
@@ -231,31 +231,31 @@ export const HitRateDonut = ({ hitRate = 85.0, hits = 1842, misses = 326 }) => {
           justifyContent: 'center',
           pointerEvents: 'none'
         }}>
-          <span style={{ fontSize: '1.4rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
+          <span style={{ fontSize: '1.45rem', fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
             {validRate.toFixed(1)}%
           </span>
-          <span style={{ fontSize: '0.675rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-            Hit Rate
+          <span style={{ fontSize: '0.675rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            Hit Ratio
           </span>
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.775rem' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-green)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Hits:</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--status-green)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-green)', boxShadow: '0 0 6px var(--status-green)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Cache Hits:</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--status-green)' }}>
               {hits.toLocaleString()}
             </span>
           </div>
         </div>
 
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.775rem' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-red)' }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Misses:</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--status-red)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-red)', boxShadow: '0 0 6px var(--status-red)' }}></span>
+            <span style={{ color: 'var(--text-secondary)' }}>Cache Misses:</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--status-red)' }}>
               {misses.toLocaleString()}
             </span>
           </div>

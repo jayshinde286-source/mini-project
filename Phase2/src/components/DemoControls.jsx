@@ -27,8 +27,12 @@ export const DemoControls = ({ onOpenSetModal, onOpenGetModal }) => {
   // Quick simulate triggers
   const handleSimulateHit = () => {
     const active = cacheEntries.find((e) => e.status === 'ACTIVE');
-    const key = active ? active.key : 'user:1001';
-    getEntry(key);
+    if (active) {
+      getEntry(active.key);
+    } else {
+      setEntry('demo:active:key', { test: 'Live telemetry probe', created: Date.now() }, 300)
+        .then(() => getEntry('demo:active:key'));
+    }
   };
 
   const handleSimulateMiss = () => {
@@ -37,11 +41,9 @@ export const DemoControls = ({ onOpenSetModal, onOpenGetModal }) => {
   };
 
   const handleSimulateDelete = () => {
-    const tempEntry = cacheEntries.find((e) => e.key.startsWith('temp:'));
-    if (tempEntry) {
-      deleteEntry(tempEntry.key);
-    } else {
-      deleteEntry('user:1002');
+    const victim = cacheEntries.find((e) => e.status === 'ACTIVE');
+    if (victim) {
+      deleteEntry(victim.key);
     }
   };
 
@@ -59,11 +61,11 @@ export const DemoControls = ({ onOpenSetModal, onOpenGetModal }) => {
       boxShadow: 'var(--shadow-sm)'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Sparkles size={16} color="var(--accent-blue)" />
+        <Sparkles size={16} color="var(--accent-primary)" />
         <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           Interactive Demo Controls
         </span>
-        <span className="badge badge-gray" style={{ fontSize: '0.675rem' }}>
+        <span className="badge badge-indigo" style={{ fontSize: '0.675rem' }}>
           Viva Shortcuts
         </span>
       </div>
@@ -75,7 +77,7 @@ export const DemoControls = ({ onOpenSetModal, onOpenGetModal }) => {
           onClick={onOpenSetModal}
           title="Open SET entry dialog"
         >
-          <Plus size={13} color="var(--accent-blue)" />
+          <Plus size={13} color="var(--accent-primary)" />
           <span>SET Entry</span>
         </button>
 

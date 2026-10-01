@@ -1,0 +1,23 @@
+{
+  "name": "spit-cache-phase3-backend",
+  "version": "1.0.0",
+  "description": "Persistent Event-Driven In-Memory Cache Engine Backend — SPIT Academic Mini Project PR1",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node ../tests/run_tests.js"
+  },
+  "keywords": [
+    "cache",
+    "lru",
+    "wal",
+    "persistence",
+    "event-driven",
+    "recovery",
+    "spit"
+  ],
+  "author": "Jay Shinde, Nikhil Shelar, Sanchit Gaikwad (SPIT Mumbai)",
+  "license": "MIT"
+}

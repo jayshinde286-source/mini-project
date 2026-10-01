@@ -1,0 +1,27 @@
+{
+  "header": {
+    "magic": "SPIT_SNAPSHOT_V1",
+    "checkpointLsn": 1,
+    "timestamp": 1790708293574,
+    "entryCount": 1,
+    "checksum": "AAF5F6B0"
+  },
+  "data": {
+    "magic": "SPIT_SNAPSHOT_V1",
+    "checkpointLsn": 1,
+    "timestamp": 1790708293574,
+    "entryCount": 1,
+    "entries": [
+      {
+        "key": "demo:student",
+        "value": {
+          "name": "Jay Shinde",
+          "uid": "2024800115"
+        },
+        "createdAt": 1790708291200,
+        "expiresAt": 1790708411200,
+        "accessCount": 2
+      }
+    ]
+  }
+}

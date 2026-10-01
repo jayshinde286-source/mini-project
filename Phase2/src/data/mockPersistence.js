@@ -1,8 +1,8 @@
 /**
- * Persistence mock data matching edu.spit.cache.persistence package
- * Supports V2 WAL format with CRC32 hex checksums
+ * Persistence real telemetry state matching edu.spit.cache.persistence package
+ * Supports V2 WAL format with IEEE 802.3 CRC32 hex checksums.
+ * Clean 0 baseline with no fabricated mock counts.
  */
-
 import { crc32Hex } from '../utils/checksum';
 
 const now = Date.now();
@@ -10,15 +10,15 @@ const now = Date.now();
 export const initialPersistenceOverview = {
   persistenceStatus: 'Active',
   walStatus: 'Healthy',
-  snapshotStatus: 'Available',
-  lastSnapshotTime: now - 180000,
-  walRecordsCount: 2431,
-  pendingWrites: 3
+  snapshotStatus: 'Standby',
+  lastSnapshotTime: 0,
+  walRecordsCount: 0,
+  pendingWrites: 0
 };
 
-const createMockWalRecord = (sequence, deltaSeconds, txnId, op, key, val, expiresAt = 0) => {
-  const ts = now - deltaSeconds * 1000;
-  const payload = `V2\t${sequence}\t${ts}\t${txnId}\t${op}\t${expiresAt}\t${btoa(key)}\t${btoa(val)}`;
+export const createRealWalRecord = (sequence, txnId, op, key, val, expiresAt = 0) => {
+  const ts = Date.now();
+  const payload = `V2\t${sequence}\t${ts}\t${txnId}\t${op}\t${expiresAt}\t${btoa(key)}\t${btoa(typeof val === 'string' ? val : JSON.stringify(val))}`;
   return {
     sequence,
     timestamp: ts,
@@ -32,44 +32,35 @@ const createMockWalRecord = (sequence, deltaSeconds, txnId, op, key, val, expire
   };
 };
 
-export const initialWalRecords = [
-  createMockWalRecord(2431, 2, 'TXN-001024', 'SET', 'user:1024', 'John Doe Active', now + 60000),
-  createMockWalRecord(2430, 8, 'TXN-001023', 'SET', 'session:8842', 'user_state_student_active_session_8842', now + 180000),
-  createMockWalRecord(2429, 35, 'TXN-001022', 'DELETE', 'temp:token:old', ''),
-  createMockWalRecord(2428, 62, 'TXN-001021', 'SET', 'product:889', 'MacBook Pro M3 Max 36GB Unified Memory', now - 10000),
-  createMockWalRecord(2427, 95, 'TXN-001020', 'SET', 'user:1001', 'Jay Shinde (UID 2024800115)', now + 58000),
-  createMockWalRecord(2426, 120, 'TXN-001019', 'DELETE', 'temp:session:102', ''),
-  createMockWalRecord(2425, 145, 'TXN-001018', 'SET', 'session:4421', 'auth_jwt_token_b3_cse_spit_valid', now + 720000),
-  createMockWalRecord(2424, 180, 'TXN-001017', 'SET', 'config:database', 'jdbc:postgresql://localhost:5432/spit_cache_pool?max=30', 0)
-];
+export const initialWalRecords = [];
 
 export const initialSnapshot = {
-  id: 'snapshot_2026_09_23_1041',
-  version: 42,
-  entriesCount: 128,
-  createdAt: now - 180000,
-  checksum: '0x9E4A10B3',
-  status: 'VALID',
-  sizeBytes: '24.8 KB'
+  id: 'none',
+  version: 0,
+  entriesCount: 0,
+  createdAt: 0,
+  checksum: '0x00000000',
+  status: 'NO_SNAPSHOT',
+  sizeBytes: '0 B'
 };
 
 export const initialRecoveryStatus = {
   status: 'READY',
-  lastRecoveryTimestamp: now - 86400000, // 24h ago
-  latestSnapshotStatus: 'VALID',
-  walIntegrityStatus: 'VALID',
-  recoverableEntries: 128,
+  lastRecoveryTimestamp: 0,
+  latestSnapshotStatus: 'NONE',
+  walIntegrityStatus: 'CLEAN',
+  recoverableEntries: 0,
   report: {
-    snapshotEntriesRestored: 124,
-    walOperationsApplied: 4,
+    snapshotEntriesRestored: 0,
+    walOperationsApplied: 0,
     incompleteTransactionOperationsSkipped: 0,
     rejectedTransactionBatches: 0,
     legacyTransactionBatchesAccepted: 0,
-    expiredEntriesSkipped: 2,
+    expiredEntriesSkipped: 0,
     malformedWalRecords: 0,
     checksumFailures: 0,
-    snapshotSequence: 2420,
-    finalWalSequence: 2431,
-    totalEntriesMaterialized: 128
+    snapshotSequence: 0,
+    finalWalSequence: 0,
+    totalEntriesMaterialized: 0
   }
 };

@@ -18,6 +18,8 @@ import { useCache } from '../context/CacheContext';
 import { StatCard } from '../components/StatCard';
 import { DemoControls } from '../components/DemoControls';
 import { ActivityChart, HitRateDonut } from '../components/Charts';
+import { MemoryProfilerCard } from '../components/MemoryProfilerCard';
+import { HotKeysWidget } from '../components/HotKeysWidget';
 import { formatNumber, formatPercent, formatRelativeTime } from '../utils/formatters';
 
 export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
@@ -40,7 +42,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
       <div className="page-header">
         <div>
           <h1 className="page-title">
-            <Activity size={22} color="var(--accent-blue)" />
+            <Activity size={22} color="var(--text-primary)" />
             Cache System Dashboard
           </h1>
           <p className="page-subtitle">
@@ -131,7 +133,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
         <div className="card-header">
           <div>
             <div className="card-title">
-              <ShieldCheck size={18} color="var(--status-green)" />
+              <ShieldCheck size={18} color="var(--text-primary)" />
               Cache Engine & Subsystem Health
             </div>
             <div className="card-description">
@@ -156,7 +158,8 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
                 border: '1px solid var(--border-subtle)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                transition: 'border-color var(--transition-fast)'
               }}
             >
               <div>
@@ -190,12 +193,15 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
           <div className="card-header">
             <div>
               <div className="card-title">
-                <Activity size={18} color="var(--accent-blue)" />
-                Cache Activity (Last 60 Minutes)
+                <Activity size={18} color="var(--accent-primary)" />
+                Cache Activity & Throughput
               </div>
               <div className="card-description">
-                Real-time throughput for Hits, Misses, SETs, and GETs
+                Real-time operational frequency: Hits, Misses, SETs, and GETs
               </div>
+            </div>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <span className="badge badge-blue">Live Stream</span>
             </div>
           </div>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
@@ -215,6 +221,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
                 Ratio of successful lookups against cold cache misses
               </div>
             </div>
+            <span className="badge badge-green">OPTIMAL</span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
@@ -227,7 +234,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
 
           <div style={{
             backgroundColor: 'var(--bg-tertiary)',
-            padding: '12px 14px',
+            padding: '14px 16px',
             borderRadius: 'var(--radius-sm)',
             border: '1px solid var(--border-subtle)',
             fontSize: '0.75rem',
@@ -236,10 +243,16 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
             justifyContent: 'space-between',
             alignItems: 'center'
           }}>
-            <span>Average Engine Latency: <strong style={{ color: 'var(--accent-cyan)' }}>1.8 ms</strong></span>
+            <span>Average Engine Latency: <strong style={{ color: 'var(--accent-cyan)' }}>{metrics.avgResponseTimeMs > 0 ? `${metrics.avgResponseTimeMs} ms` : '< 0.05 ms'}</strong></span>
             <span>Total Requests: <strong style={{ color: 'var(--text-primary)' }}>{formatNumber(metrics.totalRequests)}</strong></span>
           </div>
         </div>
+      </div>
+
+      {/* Advanced Telemetry: Hardware Profiler & Hot-Keys Heatmap */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+        <MemoryProfilerCard />
+        <HotKeysWidget onInspectKey={(key) => onNavigate('cache')} />
       </div>
 
       {/* Recent Events Section */}

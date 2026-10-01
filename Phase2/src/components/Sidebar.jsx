@@ -44,15 +44,16 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
         gap: '12px'
       }}>
         <div style={{
-          width: '36px',
-          height: '36px',
+          width: '38px',
+          height: '38px',
           borderRadius: 'var(--radius-md)',
-          backgroundColor: 'var(--accent-blue-subtle)',
-          border: '1px solid rgba(59, 130, 246, 0.4)',
+          backgroundColor: 'var(--accent-primary-subtle)',
+          border: '1px solid var(--accent-primary-border)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'var(--accent-blue)'
+          color: 'var(--accent-primary)',
+          boxShadow: '0 0 16px rgba(99, 102, 241, 0.25)'
         }}>
           <Server size={20} />
         </div>
@@ -95,7 +96,8 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
                     padding: '9px 12px',
                     borderRadius: 'var(--radius-sm)',
                     border: 'none',
-                    background: isActive ? 'var(--bg-elevated)' : 'transparent',
+                    borderLeft: isActive ? '3px solid var(--accent-primary)' : '3px solid transparent',
+                    background: isActive ? 'var(--accent-primary-subtle)' : 'transparent',
                     color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                     fontWeight: isActive ? 600 : 500,
                     fontSize: '0.85rem',
@@ -117,17 +119,18 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Icon size={16} color={isActive ? 'var(--accent-blue)' : 'var(--text-muted)'} />
+                    <Icon size={16} color={isActive ? 'var(--accent-primary)' : 'var(--text-muted)'} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge !== undefined && (
                     <span style={{
                       fontSize: '0.7rem',
-                      padding: '1px 6px',
+                      padding: '1px 7px',
                       borderRadius: 'var(--radius-full)',
-                      background: isActive ? 'var(--accent-blue)' : 'var(--bg-tertiary)',
-                      color: isActive ? '#fff' : 'var(--text-muted)',
-                      fontFamily: 'var(--font-mono)'
+                      background: isActive ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+                      color: isActive ? '#ffffff' : 'var(--text-muted)',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: 600
                     }}>
                       {item.badge}
                     </span>

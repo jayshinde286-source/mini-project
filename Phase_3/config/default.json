@@ -1,0 +1,23 @@
+{
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "cache": {
+    "capacity": 50,
+    "defaultTtlSeconds": 60,
+    "evictionPolicy": "LRU",
+    "activeTtlSweepIntervalMs": 1000,
+    "activeTtlSampleSize": 10
+  },
+  "persistence": {
+    "dataDir": "../database",
+    "walFile": "wal.log",
+    "snapshotFile": "snapshot.bin",
+    "auditFile": "audit.log",
+    "syncToDisk": true
+  },
+  "metrics": {
+    "telemetryRetention": 100
+  }
+}

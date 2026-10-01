@@ -7,7 +7,7 @@ export const TTLVisualizer = ({ expiresAt }) => {
   if (expiresAt === 0 || !expiresAt) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-        <span className="badge badge-blue" style={{ fontSize: '0.7rem' }}>
+        <span className="badge badge-gray" style={{ fontSize: '0.7rem' }}>
           PERSISTENT (NO TTL)
         </span>
       </div>
@@ -17,18 +17,18 @@ export const TTLVisualizer = ({ expiresAt }) => {
   if (info.isExpired) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-        <span className="badge badge-red" style={{ fontSize: '0.7rem' }}>
+        <span className="badge badge-gray" style={{ fontSize: '0.7rem' }}>
           EXPIRED
         </span>
       </div>
     );
   }
 
-  let barColor = 'var(--status-green)';
+  let barColor = 'var(--text-primary)';
   if (info.percent < 25) {
-    barColor = 'var(--status-red)';
+    barColor = 'var(--text-muted)';
   } else if (info.percent < 55) {
-    barColor = 'var(--status-amber)';
+    barColor = 'var(--text-secondary)';
   }
 
   return (
