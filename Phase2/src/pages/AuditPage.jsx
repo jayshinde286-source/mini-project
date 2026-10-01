@@ -25,9 +25,10 @@ export const AuditPage = () => {
       log.operation.toUpperCase().includes(filterOp.toUpperCase());
 
     const matchesSearch =
-      log.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.actor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.details.toLowerCase().includes(searchQuery.toLowerCase());
+      String(log.key || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      String(log.actor || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      String(log.details || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      String(log.operation || '').toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesOp && matchesSearch;
   });

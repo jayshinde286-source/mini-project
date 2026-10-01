@@ -22,9 +22,10 @@ export const EventsPage = () => {
   const filteredEvents = events.filter((ev) => {
     const matchesFilter = filterType === 'ALL' || ev.type === filterType;
     const matchesSearch =
-      ev.key.toLowerCase().includes(searchKey.toLowerCase()) ||
-      (ev.transactionId && ev.transactionId.toLowerCase().includes(searchKey.toLowerCase())) ||
-      (ev.detail && ev.detail.toLowerCase().includes(searchKey.toLowerCase()));
+      String(ev.key || '').toLowerCase().includes(searchKey.toLowerCase()) ||
+      String(ev.type || '').toLowerCase().includes(searchKey.toLowerCase()) ||
+      String(ev.transactionId || '').toLowerCase().includes(searchKey.toLowerCase()) ||
+      String(ev.detail || '').toLowerCase().includes(searchKey.toLowerCase());
 
     return matchesFilter && matchesSearch;
   });
