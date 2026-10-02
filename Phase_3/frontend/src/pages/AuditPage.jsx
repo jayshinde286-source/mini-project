@@ -24,10 +24,13 @@ export const AuditPage = () => {
       filterOp === 'ALL' ||
       log.operation.toUpperCase().includes(filterOp.toUpperCase());
 
+    const query = (searchQuery || '').trim().toLowerCase();
     const matchesSearch =
-      log.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.actor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      log.details.toLowerCase().includes(searchQuery.toLowerCase());
+      !query ||
+      String(log.key || log.target || '').toLowerCase().includes(query) ||
+      String(log.actor || '').toLowerCase().includes(query) ||
+      String(log.details || '').toLowerCase().includes(query) ||
+      String(log.operation || '').toLowerCase().includes(query);
 
     return matchesOp && matchesSearch;
   });

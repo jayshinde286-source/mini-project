@@ -21,10 +21,13 @@ export const EventsPage = () => {
 
   const filteredEvents = events.filter((ev) => {
     const matchesFilter = filterType === 'ALL' || ev.type === filterType;
+    const query = (searchKey || '').trim().toLowerCase();
     const matchesSearch =
-      ev.key.toLowerCase().includes(searchKey.toLowerCase()) ||
-      (ev.transactionId && ev.transactionId.toLowerCase().includes(searchKey.toLowerCase())) ||
-      (ev.detail && ev.detail.toLowerCase().includes(searchKey.toLowerCase()));
+      !query ||
+      String(ev.key || '').toLowerCase().includes(query) ||
+      String(ev.type || '').toLowerCase().includes(query) ||
+      String(ev.transactionId || '').toLowerCase().includes(query) ||
+      String(ev.detail || '').toLowerCase().includes(query);
 
     return matchesFilter && matchesSearch;
   });
