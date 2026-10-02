@@ -37,7 +37,17 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
   const theme = colorMap[color] || colorMap.blue;
 
   return (
-    <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div
+      className="card interactive"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        borderTop: `2px solid ${theme.text}`,
+        background: `linear-gradient(180deg, ${theme.bg} 0%, rgba(17, 24, 39, 0.75) 45%)`,
+        boxShadow: `0 4px 20px -2px rgba(0, 0, 0, 0.3)`
+      }}
+    >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontSize: '0.785rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           {title}
@@ -53,7 +63,7 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
             alignItems: 'center',
             justifyContent: 'center',
             color: theme.text,
-            boxShadow: `0 0 12px ${theme.bg}`
+            boxShadow: `0 0 12px ${theme.border}`
           }}>
             <Icon size={16} />
           </div>

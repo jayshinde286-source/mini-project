@@ -1,6 +1,7 @@
 {
   "name": "spit-cache-root",
   "version": "3.0.0",
+  "type": "module",
   "description": "Persistent Event-Driven In-Memory Cache Engine — SPIT Academic Mini Project",
   "scripts": {
     "server": "node Phase_3/backend/src/server.js",

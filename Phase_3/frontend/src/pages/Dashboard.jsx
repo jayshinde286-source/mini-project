@@ -20,6 +20,9 @@ import { DemoControls } from '../components/DemoControls';
 import { ActivityChart, HitRateDonut } from '../components/Charts';
 import { MemoryProfilerCard } from '../components/MemoryProfilerCard';
 import { HotKeysWidget } from '../components/HotKeysWidget';
+import { LruChainVisualizer } from '../components/LruChainVisualizer';
+import { LiveTrafficSurgeWidget } from '../components/LiveTrafficSurgeWidget';
+import { LiveTerminalTicker } from '../components/LiveTerminalTicker';
 import { formatNumber, formatPercent, formatRelativeTime } from '../utils/formatters';
 
 export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
@@ -62,6 +65,9 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
 
       {/* Interactive Demo Action Bar */}
       <DemoControls onOpenSetModal={onOpenSetModal} onOpenGetModal={onOpenGetModal} />
+
+      {/* Interactive Live Traffic Surge Controller (Tatkal Load Demonstration) */}
+      <LiveTrafficSurgeWidget />
 
       {/* 8 Metric KPI Stat Cards */}
       <div className="stats-grid">
@@ -127,6 +133,9 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
           subtext="Subscribers connected"
         />
       </div>
+
+      {/* O(1) LRU Doubly-Linked List Physical Node Chain Visualizer */}
+      <LruChainVisualizer />
 
       {/* Cache Health Section */}
       <div className="card">
@@ -325,6 +334,9 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
           </table>
         </div>
       </div>
+
+      {/* Developer Live Telemetry Terminal Strip */}
+      <LiveTerminalTicker />
     </div>
   );
 };

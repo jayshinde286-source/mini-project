@@ -341,6 +341,13 @@ export class CacheEngine {
   }
 
   /**
+   * Returns physical nodes ordered from MRU (HEAD.next) to LRU (TAIL.prev)
+   */
+  getDllNodes() {
+    return this.dll.toArray().map((node) => node.toJSON());
+  }
+
+  /**
    * Computes mathematical percentiles from real recorded operation latencies
    */
   _computePercentiles() {

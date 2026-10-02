@@ -94,6 +94,31 @@ console.log('⚡ SPIT Cache Module: Initiating cold boot recovery check...');
 const bootRecovery = recoveryManager.performRecovery();
 console.log(`✅ Recovery Complete: Snapshot: ${bootRecovery.snapshotFound}, Restored: ${bootRecovery.restoredFromSnapshotCount + bootRecovery.replayedFromWalCount} keys in ${bootRecovery.elapsedMs}ms`);
 
+// Seed realistic enterprise production workload if cold boot starts with empty cache
+if (engine.index.size === 0) {
+  console.log('📦 Seeding production baseline entries into persistent storage...');
+  const baselineEntries = [
+    { key: 'auth:jwt:session_usr_9021', value: { uid: 9021, user: 'Jay Shinde', role: 'Lead Architect', expires: '2h' }, ttl: 7200 },
+    { key: 'db:pool:postgres_primary', value: { host: '10.0.4.12', port: 5432, poolSize: 50, idleTimeoutMs: 30000 }, ttl: 0 },
+    { key: 'catalog:sku:macbook_pro_m3_max', value: { title: 'MacBook Pro M3 Max 36GB', stock: 14, priceInr: 319900 }, ttl: 3600 },
+    { key: 'api:ratelimit:client_gateway_01', value: { ip: '192.168.1.100', tokensRemaining: 580, quota: 600 }, ttl: 600 },
+    { key: 'cart:usr_4481_checkout', value: { items: 3, totalAmount: 4899.50, currency: 'INR', status: 'LOCKED' }, ttl: 1800 },
+    { key: 'geo:cdn:edge_routing_mumbai', value: { region: 'ap-south-1', latencyMs: 1.8, nodeHealth: 'OPTIMAL' }, ttl: 0 },
+    { key: 'crypto:aes:session_key_928', value: { cipher: 'AES-256-GCM', keyId: 'k-92841', iv: '7f91a2bc901e' }, ttl: 900 },
+    { key: 'sensor:iot:telemetry_node_04', value: { tempC: 24.6, cpuLoadPercent: 18.2, memUsedMb: 412 }, ttl: 300 }
+  ];
+  for (const item of baselineEntries) {
+    engine.put(item.key, item.value, item.ttl);
+  }
+  // Simulate active baseline hits & lookups
+  engine.get('auth:jwt:session_usr_9021');
+  engine.get('db:pool:postgres_primary');
+  engine.get('catalog:sku:macbook_pro_m3_max');
+  engine.get('geo:cdn:edge_routing_mumbai');
+  engine.get('nonexistent:probe:404');
+  console.log(`✅ Seeded ${engine.index.size} persistent entries into CacheEngine & WAL.`);
+}
+
 // Track connected SSE clients
 const sseClients = new Set();
 eventBus.subscribe('*', (event) => {
@@ -227,6 +252,16 @@ const server = http.createServer(async (req, res) => {
         totalKeyBytes: engine.totalKeyBytes,
         totalValueBytes: engine.totalValueBytes,
         entries
+      }, rateHeaders);
+    }
+
+    // 2b. DLL Physical Linked List Chain (MRU HEAD to LRU TAIL)
+    if (pathname === '/api/engine/dll' && method === 'GET') {
+      const nodes = engine.getDllNodes();
+      return sendJson(res, 200, {
+        count: nodes.length,
+        capacity: engine.capacity,
+        nodes
       }, rateHeaders);
     }
 
