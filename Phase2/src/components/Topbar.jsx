@@ -33,34 +33,47 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
-        flexShrink: 0
+        padding: '0 20px',
+        flexShrink: 0,
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 10
       }}>
         {/* Left Title Area */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div>
-            <div style={{
-              fontSize: '1.05rem',
-              fontWeight: 700,
-              color: 'var(--text-primary)',
-              letterSpacing: '-0.02em',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              Persistent Event-Driven Memory Cache
-              <span className="badge badge-indigo" style={{ fontSize: '0.65rem' }}>
-                v3.0.0
-              </span>
-            </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Third-Year B.Tech CSE Mini Project • Sardar Patel Institute of Technology
-            </div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          flexShrink: 0,
+          whiteSpace: 'nowrap'
+        }}>
+          <div style={{
+            fontSize: '0.975rem',
+            fontWeight: 700,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.02em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span>SPIT Cache Console</span>
+            <span className="badge badge-indigo" style={{ fontSize: '0.65rem', padding: '2px 6px' }}>
+              v3.0.0
+            </span>
           </div>
         </div>
 
         {/* Right Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          overflowX: 'auto',
+          maxWidth: '100%',
+          paddingLeft: '12px',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none'
+        }}>
           {/* Live Backend Connection Indicator */}
           <div
             style={{
