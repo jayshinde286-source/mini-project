@@ -22,7 +22,7 @@ export const Toast = () => {
       {toasts.map((toast) => {
         let Icon = Info;
         let borderColor = 'var(--accent-blue)';
-        let bg = 'rgba(17, 24, 39, 0.95)';
+        let bg = 'var(--bg-elevated)';
         let iconColor = 'var(--accent-blue)';
 
         if (toast.type === 'success') {
@@ -51,7 +51,7 @@ export const Toast = () => {
               background: bg,
               border: `1px solid ${borderColor}`,
               borderRadius: 'var(--radius-md)',
-              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.6)',
+              boxShadow: 'var(--shadow-lg)',
               animation: 'fadeIn 0.2s ease-out'
             }}
           >

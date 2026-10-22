@@ -9,7 +9,6 @@ data/*.jsonl
 .vscode/
 node_modules/
 Phase2/node_modules/
-Phase2/dist/
 .vercel/
 *.env
 

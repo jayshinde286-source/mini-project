@@ -47,6 +47,7 @@ export const BenchmarkRunnerModal = ({ isOpen, onClose }) => {
       let hits = 0;
       let misses = 0;
 
+      // Seed keys
       for (let k = 1; k <= 15; k++) {
         await setEntry(`bench:key:${k}`, `Bench Data ${k}`, 120, 'seconds');
       }

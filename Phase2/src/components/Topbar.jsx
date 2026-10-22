@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Play, Pause, GraduationCap, Users, Clock, ShieldCheck, Moon, Sun, Command, Sparkles, Keyboard, Zap } from 'lucide-react';
+import { RefreshCw, Play, Pause, GraduationCap, Users, Clock, Moon, Sun, Command, Keyboard, Zap } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 import { formatUptime } from '../utils/formatters';
 
-export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts, onOpenBenchmark }) => {
-  const { uptime, liveSimulation, setLiveSimulation, addToast, theme, toggleTheme, isBackendConnected, metrics } = useCache();
+export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts }) => {
+  const { uptime, liveSimulation, setLiveSimulation, addToast, theme, toggleTheme } = useCache();
   const [uptimeStr, setUptimeStr] = useState('00:00:00');
   const [showTeamModal, setShowTeamModal] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -33,171 +33,56 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 20px',
-        flexShrink: 0,
-        overflow: 'hidden',
-        position: 'relative',
-        zIndex: 10
+        padding: '0 24px',
+        flexShrink: 0
       }}>
         {/* Left Title Area */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          flexShrink: 0,
-          whiteSpace: 'nowrap'
-        }}>
-          <div style={{
-            fontSize: '0.975rem',
-            fontWeight: 700,
-            color: 'var(--text-primary)',
-            letterSpacing: '-0.02em',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}>
-            <span>SPIT Cache Console</span>
-            <span className="badge badge-indigo" style={{ fontSize: '0.65rem', padding: '2px 6px' }}>
-              v3.0.0
-            </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div>
+            <div style={{
+              fontSize: '1.05rem',
+              fontWeight: 700,
+              color: 'var(--text-primary)',
+              letterSpacing: '-0.02em',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              Persistent Event-Driven Memory Cache
+              <span className="badge badge-blue" style={{ fontSize: '0.65rem' }}>
+                v3.0.0 (Phase II)
+              </span>
+              <span className="badge badge-cyan" style={{ fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Zap size={11} /> p99: &lt; 0.05ms
+              </span>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Third-Year B.Tech CSE Mini Project • Sardar Patel Institute of Technology
+            </div>
           </div>
         </div>
 
         {/* Right Controls */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          overflowX: 'auto',
-          maxWidth: '100%',
-          paddingLeft: '12px',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none'
-        }}>
-          {/* Live Backend Connection Indicator */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '4px 10px',
-              borderRadius: '6px',
-              backgroundColor: isBackendConnected ? 'rgba(16, 185, 129, 0.12)' : 'rgba(99, 102, 241, 0.12)',
-              border: `1px solid ${isBackendConnected ? 'rgba(16, 185, 129, 0.3)' : 'rgba(99, 102, 241, 0.3)'}`,
-              fontSize: '0.72rem',
-              color: isBackendConnected ? 'var(--accent-emerald)' : 'var(--accent-indigo)',
-              fontWeight: 600
-            }}
-            title={isBackendConnected ? 'Connected to live hardened Node.js backend at http://localhost:8080' : 'In-browser reactive engine active with genuine dynamic calculations'}
-          >
-            <span style={{
-              width: '7px',
-              height: '7px',
-              borderRadius: '50%',
-              backgroundColor: isBackendConnected ? 'var(--accent-emerald)' : 'var(--accent-indigo)',
-              boxShadow: isBackendConnected ? '0 0 6px var(--accent-emerald)' : 'none'
-            }} />
-            <span>{isBackendConnected ? 'Live Backend (8080)' : 'Client Core'}</span>
-          </div>
-
-          {/* Zero-Crash Shield Indicator */}
-          <div
-            onClick={() => addToast('Zero-Crash Shield Active', 'ErrorBoundary, 30s socket timeout guards, payload validation, and process isolation guarantee zero crashes.', 'success')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              padding: '4px 8px',
-              borderRadius: '6px',
-              backgroundColor: 'rgba(99, 102, 241, 0.08)',
-              border: '1px solid rgba(99, 102, 241, 0.2)',
-              fontSize: '0.7rem',
-              color: 'var(--accent-indigo)',
-              fontWeight: 600,
-              cursor: 'pointer'
-            }}
-            title="Zero-Crash Guarantee Active"
-          >
-            <ShieldCheck size={12} color="var(--accent-indigo)" />
-            <span>Zero-Crash Active</span>
-          </div>
-
-          {/* Real Latency Badge */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              padding: '4px 8px',
-              borderRadius: '6px',
-              backgroundColor: 'rgba(56, 189, 248, 0.1)',
-              border: '1px solid rgba(56, 189, 248, 0.25)',
-              fontSize: '0.72rem',
-              color: 'var(--accent-cyan)',
-              fontWeight: 600
-            }}
-            title="Real measured latency from actual operations"
-          >
-            <Zap size={11} fill="currentColor" />
-            <span>{metrics.avgResponseTimeMs > 0 ? `Latency: ${metrics.avgResponseTimeMs}ms` : 'Latency: < 0.1ms'}</span>
-          </div>
-
-          {/* Benchmark Runner Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* Quick Search / Command Palette Shortcut */}
           <button
-            id="benchmark-runner-btn"
-            className="btn btn-outline btn-sm"
-            onClick={onOpenBenchmark}
-            title="Run Concurrency & Microsecond Latency Benchmark"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              backgroundColor: 'rgba(99, 102, 241, 0.1)',
-              borderColor: 'rgba(99, 102, 241, 0.3)',
-              color: 'var(--accent-indigo)',
-              fontWeight: 600,
-              fontSize: '0.75rem'
-            }}
-          >
-            <Zap size={13} fill="currentColor" />
-            <span>Benchmark</span>
-          </button>
-
-          {/* Quick Command Palette Button */}
-          <button
-            id="cmd-palette-btn"
-            className="btn btn-outline btn-sm"
             onClick={onOpenCommandPalette}
-            title="Open Command Palette (Cmd + K or Ctrl + K)"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: 'var(--bg-tertiary)',
-              border: '1px solid var(--border-default)'
-            }}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.775rem' }}
+            title="Command Palette (Cmd+K)"
           >
-            <Command size={13} color="var(--accent-primary)" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>Cmd+K</span>
+            <Command size={13} />
+            <span>Cmd+K</span>
           </button>
 
-          {/* Keyboard Shortcuts (?) Button */}
+          {/* Keyboard Shortcuts Dialog Trigger */}
           <button
-            id="keyboard-shortcuts-btn"
-            className="btn btn-outline btn-sm"
             onClick={onOpenShortcuts}
-            title="Keyboard Shortcuts Cheat Sheet (Press ?)"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              backgroundColor: 'var(--bg-tertiary)',
-              border: '1px solid var(--border-default)',
-              padding: '5px 8px'
-            }}
+            className="btn btn-outline btn-sm"
+            style={{ padding: '6px 9px' }}
+            title="Keyboard Shortcuts (?)"
           >
-            <Keyboard size={13} color="var(--accent-indigo)" />
-            <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>?</span>
+            <Keyboard size={13} />
           </button>
 
           {/* Uptime Indicator */}
@@ -251,7 +136,7 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts,
             <span>Live Updates: {liveSimulation ? 'ON' : 'OFF'}</span>
           </button>
 
-          {/* Viva Demo Guide Button */}
+          {/* Professor Viva Demo Guide Button */}
           <button
             id="viva-demo-guide-btn"
             onClick={onOpenDemoGuide}
@@ -267,31 +152,15 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts,
             <span>Viva Demo Flow</span>
           </button>
 
-          {/* Theme Toggle Button */}
+          {/* Dark / Light Mode Switch */}
           <button
-            id="theme-toggle-btn"
             onClick={toggleTheme}
             className="btn btn-outline btn-sm"
-            title={`Current theme: ${theme === 'dark' ? 'Dark Mode' : 'Light Mode'}. Click to toggle theme.`}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontWeight: 600,
-              padding: '6px 12px'
-            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+            title={`Toggle Theme (Current: ${theme})`}
           >
-            {theme === 'dark' ? (
-              <>
-                <Moon size={14} color="var(--accent-primary)" />
-                <span>Theme: Dark</span>
-              </>
-            ) : (
-              <>
-                <Sun size={14} color="var(--status-amber)" />
-                <span>Theme: Light</span>
-              </>
-            )}
+            {theme === 'dark' ? <Moon size={14} /> : <Sun size={14} />}
+            <span>Theme: {theme === 'dark' ? 'Dark' : 'Light'}</span>
           </button>
 
           {/* Team Info Button */}

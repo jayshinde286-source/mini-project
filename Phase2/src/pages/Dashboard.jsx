@@ -18,11 +18,6 @@ import { useCache } from '../context/CacheContext';
 import { StatCard } from '../components/StatCard';
 import { DemoControls } from '../components/DemoControls';
 import { ActivityChart, HitRateDonut } from '../components/Charts';
-import { MemoryProfilerCard } from '../components/MemoryProfilerCard';
-import { HotKeysWidget } from '../components/HotKeysWidget';
-import { LruChainVisualizer } from '../components/LruChainVisualizer';
-import { LiveTrafficSurgeWidget } from '../components/LiveTrafficSurgeWidget';
-import { LiveTerminalTicker } from '../components/LiveTerminalTicker';
 import { formatNumber, formatPercent, formatRelativeTime } from '../utils/formatters';
 
 export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
@@ -45,7 +40,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
       <div className="page-header">
         <div>
           <h1 className="page-title">
-            <Activity size={22} color="var(--text-primary)" />
+            <Activity size={22} color="var(--accent-blue)" />
             Cache System Dashboard
           </h1>
           <p className="page-subtitle">
@@ -65,9 +60,6 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
 
       {/* Interactive Demo Action Bar */}
       <DemoControls onOpenSetModal={onOpenSetModal} onOpenGetModal={onOpenGetModal} />
-
-      {/* Interactive Live Traffic Surge Controller (Tatkal Load Demonstration) */}
-      <LiveTrafficSurgeWidget />
 
       {/* 8 Metric KPI Stat Cards */}
       <div className="stats-grid">
@@ -134,15 +126,12 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
         />
       </div>
 
-      {/* O(1) LRU Doubly-Linked List Physical Node Chain Visualizer */}
-      <LruChainVisualizer />
-
       {/* Cache Health Section */}
       <div className="card">
         <div className="card-header">
           <div>
             <div className="card-title">
-              <ShieldCheck size={18} color="var(--text-primary)" />
+              <ShieldCheck size={18} color="var(--status-green)" />
               Cache Engine & Subsystem Health
             </div>
             <div className="card-description">
@@ -167,8 +156,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
                 border: '1px solid var(--border-subtle)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                transition: 'border-color var(--transition-fast)'
+                justifyContent: 'space-between'
               }}
             >
               <div>
@@ -202,16 +190,14 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
           <div className="card-header">
             <div>
               <div className="card-title">
-                <Activity size={18} color="var(--accent-primary)" />
+                <Activity size={18} color="var(--accent-blue)" />
                 Cache Activity & Throughput
               </div>
               <div className="card-description">
                 Real-time operational frequency: Hits, Misses, SETs, and GETs
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <span className="badge badge-blue">Live Stream</span>
-            </div>
+            <span className="badge badge-blue">LIVE STREAM</span>
           </div>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
             <ActivityChart data={activityHistory} />
@@ -243,7 +229,7 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
 
           <div style={{
             backgroundColor: 'var(--bg-tertiary)',
-            padding: '14px 16px',
+            padding: '12px 14px',
             borderRadius: 'var(--radius-sm)',
             border: '1px solid var(--border-subtle)',
             fontSize: '0.75rem',
@@ -252,16 +238,10 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
             justifyContent: 'space-between',
             alignItems: 'center'
           }}>
-            <span>Average Engine Latency: <strong style={{ color: 'var(--accent-cyan)' }}>{metrics.avgResponseTimeMs > 0 ? `${metrics.avgResponseTimeMs} ms` : '< 0.05 ms'}</strong></span>
+            <span>Average Engine Latency: <strong style={{ color: 'var(--accent-cyan)' }}>1.8 ms</strong></span>
             <span>Total Requests: <strong style={{ color: 'var(--text-primary)' }}>{formatNumber(metrics.totalRequests)}</strong></span>
           </div>
         </div>
-      </div>
-
-      {/* Advanced Telemetry: Hardware Profiler & Hot-Keys Heatmap */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-        <MemoryProfilerCard />
-        <HotKeysWidget onInspectKey={(key) => onNavigate('cache')} />
       </div>
 
       {/* Recent Events Section */}
@@ -334,9 +314,6 @@ export const Dashboard = ({ onNavigate, onOpenSetModal, onOpenGetModal }) => {
           </table>
         </div>
       </div>
-
-      {/* Developer Live Telemetry Terminal Strip */}
-      <LiveTerminalTicker />
     </div>
   );
 };

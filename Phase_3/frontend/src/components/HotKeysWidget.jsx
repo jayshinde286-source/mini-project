@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flame, Zap, Snowflake, RefreshCw } from 'lucide-react';
+import { Flame, Zap, Snowflake, ArrowUpRight, Eye, RefreshCw } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 
 export const HotKeysWidget = ({ onInspectKey }) => {
@@ -25,6 +25,7 @@ export const HotKeysWidget = ({ onInspectKey }) => {
       } catch (e) {}
     }
 
+    // Local state calculation
     const active = (cacheEntries || []).filter((e) => e.status === 'ACTIVE');
     const sorted = [...active].sort((a, b) => (b.accessCount || 0) - (a.accessCount || 0));
 

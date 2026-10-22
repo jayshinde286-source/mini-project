@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ShieldAlert, RefreshCw, CheckCircle } from 'lucide-react';
+import { ShieldAlert, RefreshCw, CheckCircle, LifeBuoy } from 'lucide-react';
 
 /**
  * Enterprise Error Boundary with Zero-Crash Self-Healing
@@ -28,6 +28,7 @@ export class ErrorBoundary extends Component {
 
   handleSelfHeal = () => {
     this.setState({ healed: true });
+    // Clear potentially corrupted local session state
     try {
       sessionStorage.removeItem('spit_cache_temp_state');
     } catch (e) {}
@@ -119,7 +120,8 @@ export class ErrorBoundary extends Component {
                   border: 'none',
                   fontWeight: 600,
                   fontSize: '0.9rem',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  transition: 'opacity 0.2s'
                 }}
               >
                 <CheckCircle size={16} />

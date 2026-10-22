@@ -1,0 +1,8 @@
+[build]
+  base = "Phase2"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

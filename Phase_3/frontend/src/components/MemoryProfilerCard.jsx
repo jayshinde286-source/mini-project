@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cpu, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Cpu, HardDrive, ShieldCheck, Database, Zap, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 
 export const MemoryProfilerCard = () => {
@@ -23,6 +23,7 @@ export const MemoryProfilerCard = () => {
         }
       }
 
+      // Local client self-healing verification
       setTimeout(() => {
         setCertifiedReport({
           status: 'INTEGRITY_CERTIFIED',

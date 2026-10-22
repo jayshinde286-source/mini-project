@@ -4,7 +4,7 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
   const colorMap = {
     blue: {
       bg: 'var(--accent-blue-subtle)',
-      border: 'var(--border-default)',
+      border: 'rgba(59, 130, 246, 0.3)',
       text: 'var(--accent-blue)'
     },
     green: {
@@ -24,12 +24,12 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
     },
     purple: {
       bg: 'var(--accent-purple-subtle)',
-      border: 'var(--border-default)',
+      border: 'rgba(139, 92, 246, 0.3)',
       text: 'var(--accent-purple)'
     },
     cyan: {
       bg: 'var(--accent-cyan-subtle)',
-      border: 'var(--border-default)',
+      border: 'rgba(6, 182, 212, 0.3)',
       text: 'var(--accent-cyan)'
     }
   };
@@ -37,35 +37,24 @@ export const StatCard = ({ title, value, icon: Icon, color = 'blue', subtext, ba
   const theme = colorMap[color] || colorMap.blue;
 
   return (
-    <div
-      className="card interactive"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        borderTop: `2px solid ${theme.text}`,
-        background: `linear-gradient(180deg, ${theme.bg} 0%, rgba(17, 24, 39, 0.75) 45%)`,
-        boxShadow: `0 4px 20px -2px rgba(0, 0, 0, 0.3)`
-      }}
-    >
+    <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontSize: '0.785rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           {title}
         </span>
         {Icon && (
           <div style={{
-            width: '32px',
-            height: '32px',
+            width: '28px',
+            height: '28px',
             borderRadius: 'var(--radius-sm)',
             backgroundColor: theme.bg,
             border: `1px solid ${theme.border}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: theme.text,
-            boxShadow: `0 0 12px ${theme.border}`
+            color: theme.text
           }}>
-            <Icon size={16} />
+            <Icon size={15} />
           </div>
         )}
       </div>
