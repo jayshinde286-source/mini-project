@@ -1,26 +1,39 @@
 {
   "header": {
     "magic": "SPIT_SNAPSHOT_V1",
-    "checkpointLsn": 5,
-    "timestamp": 1790884815230,
-    "entryCount": 1,
-    "checksum": "00761DA4"
+    "checkpointLsn": 1908,
+    "timestamp": 1793204015489,
+    "entryCount": 2,
+    "checksum": "020D1E2E"
   },
   "data": {
     "magic": "SPIT_SNAPSHOT_V1",
-    "checkpointLsn": 5,
-    "timestamp": 1790884815230,
-    "entryCount": 1,
+    "checkpointLsn": 1908,
+    "timestamp": 1793204015489,
+    "entryCount": 2,
     "entries": [
       {
-        "key": "spit:exam",
+        "key": "db:pool:postgres_primary",
         "value": {
-          "subject": "Computer Networks",
-          "score": 95
+          "host": "10.0.4.12",
+          "port": 5432,
+          "poolSize": 50,
+          "idleTimeoutMs": 30000
         },
-        "createdAt": 1790881996204,
-        "expiresAt": 1790885596204,
-        "accessCount": 4
+        "createdAt": 1790958017200,
+        "expiresAt": 0,
+        "accessCount": 1
+      },
+      {
+        "key": "geo:cdn:edge_routing_mumbai",
+        "value": {
+          "region": "ap-south-1",
+          "latencyMs": 1.8,
+          "nodeHealth": "OPTIMAL"
+        },
+        "createdAt": 1790958017222,
+        "expiresAt": 0,
+        "accessCount": 1
       }
     ]
   }
