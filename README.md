@@ -26,8 +26,8 @@
 
 > ### 📘 MASTER EVALUATION & PROJECT GUIDES
 > **For evaluators, viva examiners, and students:**  
-> 1. **[HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md](HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md)** — Explaining what the project is in simple words, the problem it solves, end-to-end operational workflows, byte-level persistence, and **top 15 viva questions and answers**.  
-> 2. **[CHAT.md](CHAT.md)** — **Full Viva Defense Interview Script**: A realistic conversational dialogue between the Faculty Examiner and the Student team covering the entire viva from opening pitch to 50/50 grading!
+> 1. **[HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md](HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md)** — Explaining end-to-end operational workflows, byte-level persistence, and **top viva technical questions and answers**.  
+> 2. **[Phase_3/PROJECT_DOCUMENTATION.md](Phase_3/PROJECT_DOCUMENTATION.md)** — Complete module architecture, physical database schemas, REST APIs, and **40 technical viva Q&As**.  
 > 3. **[Phase_3/PROJECT_VIVA_100_QA.md](Phase_3/PROJECT_VIVA_100_QA.md)** — **100 Comprehensive Technical Viva Questions and Answers** across 17 assessment domains.
 
 ---
@@ -313,5 +313,3 @@ The most valuable future extensions are a TCP/HTTP adapter, background WAL group
 - [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) — package ownership and coding conventions
 - [docs/TEST_PLAN.md](docs/TEST_PLAN.md) — verification matrix and demo evidence
 - [docs/VIVA_HANDBOOK_50_PAGES.md](docs/VIVA_HANDBOOK_50_PAGES.md) — fifty-page technical explanation and viva question bank
-- [COMPLETE_PROJECT_EXPORT.md](COMPLETE_PROJECT_EXPORT.md) — original proposal/history
-- [PRESENTATION_GUIDE_FOR_MAAM.md](PRESENTATION_GUIDE_FOR_MAAM.md) — presentation material from the earlier version
