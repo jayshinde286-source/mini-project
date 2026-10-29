@@ -6,7 +6,6 @@ import { Toast } from './components/Toast';
 import { CacheOperationModal } from './components/CacheOperationModal';
 import { GetKeyModal } from './components/GetKeyModal';
 import { DeleteConfirmModal } from './components/DeleteConfirmModal';
-import { ProfessorDemoModal } from './components/ProfessorDemoModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
 import { BenchmarkRunnerModal } from './components/BenchmarkRunnerModal';
@@ -30,7 +29,6 @@ export const MainDashboardApp = () => {
   const [selectedKeyForGet, setSelectedKeyForGet] = useState('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedKeyForDelete, setSelectedKeyForDelete] = useState('');
-  const [isDemoGuideOpen, setIsDemoGuideOpen] = useState(false);
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const [isBenchmarkOpen, setIsBenchmarkOpen] = useState(false);
@@ -88,7 +86,6 @@ export const MainDashboardApp = () => {
       <div className="main-wrapper">
         {/* Top Header */}
         <Topbar
-          onOpenDemoGuide={() => setIsDemoGuideOpen(true)}
           onOpenCommandPalette={() => setIsCmdPaletteOpen(true)}
           onOpenShortcuts={() => setIsShortcutsOpen(true)}
           onOpenBenchmark={() => setIsBenchmarkOpen(true)}
@@ -142,14 +139,6 @@ export const MainDashboardApp = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         entryKey={selectedKeyForDelete}
-      />
-
-      <ProfessorDemoModal
-        isOpen={isDemoGuideOpen}
-        onClose={() => setIsDemoGuideOpen(false)}
-        setActiveTab={setActiveTab}
-        onOpenSetModal={() => setIsSetModalOpen(true)}
-        onOpenGetModal={() => handleOpenGetModal()}
       />
 
       {/* Quick Command Palette (Cmd + K) */}

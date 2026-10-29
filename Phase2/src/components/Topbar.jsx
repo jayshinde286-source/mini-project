@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Play, Pause, GraduationCap, Users, Clock, Moon, Sun, Command, Keyboard, Zap, Globe, Github, BookOpen, ExternalLink } from 'lucide-react';
+import { RefreshCw, Play, Pause, Users, Clock, Moon, Sun, Command, Keyboard, Zap, Globe, Github, BookOpen, ExternalLink } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 import { formatUptime } from '../utils/formatters';
 
-export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts, onOpenDeployGuide, onOpenVivaBank }) => {
+export const Topbar = ({ onOpenCommandPalette, onOpenShortcuts, onOpenDeployGuide, onOpenVivaBank }) => {
   const { uptime, liveSimulation, setLiveSimulation, addToast, theme, toggleTheme } = useCache();
   const [uptimeStr, setUptimeStr] = useState('00:00:00');
   const [showTeamModal, setShowTeamModal] = useState(false);
@@ -185,24 +185,6 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts,
           >
             {liveSimulation ? <Play size={12} fill="currentColor" /> : <Pause size={12} />}
             <span>Live: {liveSimulation ? 'ON' : 'OFF'}</span>
-          </button>
-
-          {/* Professor Viva Demo Guide Button */}
-          <button
-            id="viva-demo-guide-btn"
-            onClick={onOpenDemoGuide}
-            className="btn btn-primary btn-sm"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              padding: '5px 10px'
-            }}
-          >
-            <GraduationCap size={14} />
-            <span>Viva Demo</span>
           </button>
 
           {/* Dark / Light Mode Switch */}
