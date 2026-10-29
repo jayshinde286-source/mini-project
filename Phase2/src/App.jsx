@@ -9,8 +9,6 @@ import { DeleteConfirmModal } from './components/DeleteConfirmModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
 import { BenchmarkRunnerModal } from './components/BenchmarkRunnerModal';
-import { DeployAndShareModal } from './components/DeployAndShareModal';
-import { VivaQuestionBankModal } from './components/VivaQuestionBankModal';
 
 import { Dashboard } from './pages/Dashboard';
 import { CachePage } from './pages/CachePage';
@@ -32,8 +30,6 @@ export const MainDashboardApp = () => {
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const [isBenchmarkOpen, setIsBenchmarkOpen] = useState(false);
-  const [isDeployGuideOpen, setIsDeployGuideOpen] = useState(false);
-  const [isVivaBankOpen, setIsVivaBankOpen] = useState(false);
 
   const handleOpenGetModal = (key = '') => {
     setSelectedKeyForGet(key);
@@ -89,8 +85,6 @@ export const MainDashboardApp = () => {
           onOpenCommandPalette={() => setIsCmdPaletteOpen(true)}
           onOpenShortcuts={() => setIsShortcutsOpen(true)}
           onOpenBenchmark={() => setIsBenchmarkOpen(true)}
-          onOpenDeployGuide={() => setIsDeployGuideOpen(true)}
-          onOpenVivaBank={() => setIsVivaBankOpen(true)}
         />
 
         {/* Scrollable Main Content Area */}
@@ -160,18 +154,6 @@ export const MainDashboardApp = () => {
       <BenchmarkRunnerModal
         isOpen={isBenchmarkOpen}
         onClose={() => setIsBenchmarkOpen(false)}
-      />
-
-      {/* Website Deployment & Share Guide */}
-      <DeployAndShareModal
-        isOpen={isDeployGuideOpen}
-        onClose={() => setIsDeployGuideOpen(false)}
-      />
-
-      {/* 100 Technical Viva Q&A Bank */}
-      <VivaQuestionBankModal
-        isOpen={isVivaBankOpen}
-        onClose={() => setIsVivaBankOpen(false)}
       />
 
       {/* Global Notifications */}
