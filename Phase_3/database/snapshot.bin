@@ -1,15 +1,15 @@
 {
   "header": {
     "magic": "SPIT_SNAPSHOT_V1",
-    "checkpointLsn": 1908,
-    "timestamp": 1793204015489,
+    "checkpointLsn": 1976,
+    "timestamp": 1793307518527,
     "entryCount": 2,
-    "checksum": "020D1E2E"
+    "checksum": "B213B7A4"
   },
   "data": {
     "magic": "SPIT_SNAPSHOT_V1",
-    "checkpointLsn": 1908,
-    "timestamp": 1793204015489,
+    "checkpointLsn": 1976,
+    "timestamp": 1793307518527,
     "entryCount": 2,
     "entries": [
       {

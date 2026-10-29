@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Play, Pause, GraduationCap, Users, Clock, Moon, Sun, Command, Keyboard, Zap } from 'lucide-react';
+import { RefreshCw, Play, Pause, GraduationCap, Users, Clock, Moon, Sun, Command, Keyboard, Zap, Globe, Github, BookOpen, ExternalLink } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 import { formatUptime } from '../utils/formatters';
 
-export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts }) => {
+export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts, onOpenDeployGuide, onOpenVivaBank }) => {
   const { uptime, liveSimulation, setLiveSimulation, addToast, theme, toggleTheme } = useCache();
   const [uptimeStr, setUptimeStr] = useState('00:00:00');
   const [showTeamModal, setShowTeamModal] = useState(false);
@@ -33,45 +33,116 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
+        padding: '0 20px',
         flexShrink: 0
       }}>
         {/* Left Title Area */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div>
             <div style={{
-              fontSize: '1.05rem',
+              fontSize: '1.025rem',
               fontWeight: 700,
               color: 'var(--text-primary)',
               letterSpacing: '-0.02em',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '8px',
+              flexWrap: 'wrap'
             }}>
               Persistent Event-Driven Memory Cache
               <span className="badge badge-blue" style={{ fontSize: '0.65rem' }}>
-                v3.0.0 (Phase II)
+                v3.0.0 (Phase II & III)
+              </span>
+              <span className="badge badge-green" style={{ fontSize: '0.65rem' }}>
+                50/50 Marks Complete
               </span>
               <span className="badge badge-cyan" style={{ fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <Zap size={11} /> p99: &lt; 0.05ms
               </span>
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
               Third-Year B.Tech CSE Mini Project • Sardar Patel Institute of Technology
             </div>
           </div>
         </div>
 
         {/* Right Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
+          
+          {/* Official Netlify Live Link */}
+          <a
+            href="https://spit-cache-module-2026.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline btn-sm"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '0.75rem',
+              borderColor: 'rgba(16, 185, 129, 0.4)',
+              backgroundColor: 'rgba(16, 185, 129, 0.08)',
+              color: 'var(--status-green)',
+              textDecoration: 'none',
+              padding: '5px 9px'
+            }}
+            title="Open Live Deployed Site on Netlify"
+          >
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
+            <span>Netlify Live</span>
+            <ExternalLink size={11} />
+          </a>
+
+          {/* GitHub Official Repo Link */}
+          <a
+            href="https://github.com/jayshinde286-source/mini-project"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline btn-sm"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: '0.75rem',
+              textDecoration: 'none',
+              padding: '5px 9px'
+            }}
+            title="Open GitHub Repository (jayshinde286-source/mini-project)"
+          >
+            <Github size={13} />
+            <span>GitHub</span>
+          </a>
+
+          {/* Deployment & Share Guide Trigger */}
+          <button
+            onClick={onOpenDeployGuide}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', padding: '5px 9px' }}
+            title="How to Deploy & Share Guide"
+          >
+            <Globe size={13} color="var(--accent-cyan)" />
+            <span>Deploy Guide</span>
+          </button>
+
+          {/* 100 Viva Q&A Bank Trigger */}
+          <button
+            onClick={onOpenVivaBank}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', padding: '5px 9px' }}
+            title="100 Technical Viva Q&A Bank"
+          >
+            <BookOpen size={13} color="var(--accent-blue)" />
+            <span>100 Viva Q&A</span>
+          </button>
+
           {/* Quick Search / Command Palette Shortcut */}
           <button
             onClick={onOpenCommandPalette}
             className="btn btn-outline btn-sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.775rem' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', padding: '5px 8px' }}
             title="Command Palette (Cmd+K)"
           >
-            <Command size={13} />
+            <Command size={12} />
             <span>Cmd+K</span>
           </button>
 
@@ -79,30 +150,11 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
           <button
             onClick={onOpenShortcuts}
             className="btn btn-outline btn-sm"
-            style={{ padding: '6px 9px' }}
+            style={{ padding: '5px 8px' }}
             title="Keyboard Shortcuts (?)"
           >
             <Keyboard size={13} />
           </button>
-
-          {/* Uptime Indicator */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            backgroundColor: 'var(--bg-tertiary)',
-            padding: '6px 10px',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '0.775rem',
-            color: 'var(--text-secondary)'
-          }}>
-            <Clock size={13} color="var(--accent-cyan)" />
-            <span>Uptime:</span>
-            <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-primary)', fontWeight: 600 }}>
-              {uptimeStr}
-            </span>
-          </div>
 
           {/* Live Simulator Switch */}
           <button
@@ -119,21 +171,20 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
+              gap: '5px',
+              padding: '5px 9px',
               borderRadius: 'var(--radius-sm)',
               border: '1px solid',
               borderColor: liveSimulation ? 'var(--status-green-border)' : 'var(--border-default)',
               backgroundColor: liveSimulation ? 'var(--status-green-bg)' : 'var(--bg-tertiary)',
               color: liveSimulation ? 'var(--status-green)' : 'var(--text-secondary)',
-              fontSize: '0.775rem',
+              fontSize: '0.75rem',
               fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all var(--transition-fast)'
+              cursor: 'pointer'
             }}
           >
-            {liveSimulation ? <Play size={13} fill="currentColor" /> : <Pause size={13} />}
-            <span>Live Updates: {liveSimulation ? 'ON' : 'OFF'}</span>
+            {liveSimulation ? <Play size={12} fill="currentColor" /> : <Pause size={12} />}
+            <span>Live: {liveSimulation ? 'ON' : 'OFF'}</span>
           </button>
 
           {/* Professor Viva Demo Guide Button */}
@@ -144,23 +195,24 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              fontWeight: 600
+              gap: '5px',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              padding: '5px 10px'
             }}
           >
-            <GraduationCap size={15} />
-            <span>Viva Demo Flow</span>
+            <GraduationCap size={14} />
+            <span>Viva Demo</span>
           </button>
 
           {/* Dark / Light Mode Switch */}
           <button
             onClick={toggleTheme}
             className="btn btn-outline btn-sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '5px 8px' }}
             title={`Toggle Theme (Current: ${theme})`}
           >
-            {theme === 'dark' ? <Moon size={14} /> : <Sun size={14} />}
-            <span>Theme: {theme === 'dark' ? 'Dark' : 'Light'}</span>
+            {theme === 'dark' ? <Moon size={13} /> : <Sun size={13} />}
           </button>
 
           {/* Team Info Button */}
@@ -168,10 +220,10 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
             id="team-info-btn"
             onClick={() => setShowTeamModal(true)}
             className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '5px 8px' }}
             title="Project Team & Guide Details"
           >
-            <Users size={14} />
-            <span>Team</span>
+            <Users size={13} />
           </button>
 
           {/* Refresh Button */}
@@ -179,9 +231,10 @@ export const Topbar = ({ onOpenDemoGuide, onOpenCommandPalette, onOpenShortcuts 
             id="refresh-dashboard-btn"
             onClick={handleManualRefresh}
             className="btn btn-outline btn-sm"
+            style={{ padding: '5px 8px' }}
             title="Refresh Cache State"
           >
-            <RefreshCw size={14} className={isRefreshing ? 'spin' : ''} style={{ animation: isRefreshing ? 'spin 1s linear infinite' : 'none' }} />
+            <RefreshCw size={13} className={isRefreshing ? 'spin' : ''} style={{ animation: isRefreshing ? 'spin 1s linear infinite' : 'none' }} />
           </button>
         </div>
       </header>

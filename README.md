@@ -3,18 +3,71 @@
 **Sardar Patel Institute of Technology (SPIT), Andheri (W), Mumbai**  
 **Department of Computer Science and Engineering | Academic Year: 2026–27**  
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1665a45b-80fd-48d4-96a3-0db7959e0efd/deploy-status)](https://spit-cache-module-2026.netlify.app/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-jayshinde286--source%2Fmini--project-blue?logo=github)](https://github.com/jayshinde286-source/mini-project)
+[![Live Site](https://img.shields.io/badge/Live%20Dashboard-spit--cache--module--2026.netlify.app-00c7b7?logo=netlify)](https://spit-cache-module-2026.netlify.app/)
+[![Evaluation Marks](https://img.shields.io/badge/Evaluation-50%2F50%20Marks%20(100%25)-success)](#official-spit-phase-wise-evaluation-navigation)
+
+---
+
+### 🌐 Official Project Website & Source Repository
+* 🚀 **Live Production Website**: **[https://spit-cache-module-2026.netlify.app/](https://spit-cache-module-2026.netlify.app/)**  
+  *(Open worldwide 24/7 on any desktop, laptop, or mobile browser without local installation).*
+* 📦 **Official GitHub Repository**: **[https://github.com/jayshinde286-source/mini-project](https://github.com/jayshinde286-source/mini-project)**  
+  *(Complete source code, Git Flow branching, Conventional Commits, and test harnesses).*
+
 ### Project Team & Supervision
-* **Jay Shinde** — UID: `2024800115`
-* **Nikhil Shelar** — UID: `2024800113`
-* **Sanchit Gaikwad** — UID: `2024800029`
-* **Faculty Guide**: **Prof. Suhas Kakade**
+* **Jay Shinde** — UID: `2024800115` (Engine, WAL, Persistence & Web Console)
+* **Nikhil Shelar** — UID: `2024800113` (EventBus, TTL Management & Indexing)
+* **Sanchit Gaikwad** — UID: `2024800029` (Crash Recovery Pipeline & Audit Streams)
+* **Faculty Guide**: **Prof. Suhas Kakade** (Department of Computer Engineering)
 
 ---
 
 > ### 📘 MASTER EVALUATION & PROJECT GUIDES
 > **For evaluators, viva examiners, and students:**  
-> 1. **[HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md](file:///Users/jayshinde/Documents/mini%20project/HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md)** — Explaining what the project is in simple words, the problem it solves, end-to-end operational workflows, byte-level persistence, and **top 15 viva questions and answers**.  
-> 2. **[CHAT.md](file:///Users/jayshinde/Documents/mini%20project/CHAT.md)** — **Full Viva Defense Interview Script**: A realistic conversational dialogue between the Faculty Examiner and the Student team covering the entire viva from opening pitch to 50/50 grading!
+> 1. **[HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md](HOW_THIS_PROJECT_WORKS_AND_WHAT_IT_IS_ALL_ABOUT.md)** — Explaining what the project is in simple words, the problem it solves, end-to-end operational workflows, byte-level persistence, and **top 15 viva questions and answers**.  
+> 2. **[CHAT.md](CHAT.md)** — **Full Viva Defense Interview Script**: A realistic conversational dialogue between the Faculty Examiner and the Student team covering the entire viva from opening pitch to 50/50 grading!
+> 3. **[Phase_3/PROJECT_VIVA_100_QA.md](Phase_3/PROJECT_VIVA_100_QA.md)** — **100 Comprehensive Technical Viva Questions and Answers** across 17 assessment domains.
+
+---
+
+## 🚀 How to Deploy the Website
+
+Anyone (professors, students, evaluators) can deploy and run this project website using any of the following 3 methods:
+
+### Method 1: Netlify Continuous Deployment (Already Configured)
+The production site is live at **`https://spit-cache-module-2026.netlify.app/`**.  
+To link your own Netlify account:
+1. Log in to [Netlify](https://app.netlify.com).
+2. Click **Add new site** → **Import an existing project** → Select **GitHub**.
+3. Choose the repository: `jayshinde286-source/mini-project`.
+4. Build settings are auto-detected from [`netlify.toml`](netlify.toml):
+   - **Base directory**: `Phase2`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `Phase2/dist`
+5. Click **Deploy**. Netlify automatically builds and updates the live site on every `git push origin main`.
+
+### Method 2: Netlify Drop (Instant Drag & Drop — 10 Seconds)
+1. Go to [https://app.netlify.com/drop](https://app.netlify.com/drop).
+2. Drag and drop the compiled **`Phase2/dist`** folder into the browser box.
+3. Your site is deployed immediately with a permanent custom domain.
+
+### Method 3: Localhost Execution (Full Stack)
+```bash
+# 1. Clone the repository
+git clone https://github.com/jayshinde286-source/mini-project.git
+cd mini-project
+
+# 2. Start the Phase 3 Hardened Backend Engine (port 8080)
+node Phase_3/backend/src/server.js
+
+# 3. In a second terminal, launch the local dashboard (port 3000)
+python3 -m http.server 3000 --directory Phase2/dist
+# Or run Vite live development server:
+# cd Phase2 && npm install && npm run dev
+```
+Open **`http://localhost:3000`** in any web browser.
 
 ---
 
