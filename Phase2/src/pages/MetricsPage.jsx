@@ -152,7 +152,7 @@ export const MetricsPage = () => {
         <div className="card-header">
           <div>
             <div className="card-title">
-              Academic Benchmark Summary (SPIT B.Tech Evaluation)
+              High-Throughput Concurrency Benchmark Summary
             </div>
             <div className="card-description">
               Verified operational thresholds recorded during test suites

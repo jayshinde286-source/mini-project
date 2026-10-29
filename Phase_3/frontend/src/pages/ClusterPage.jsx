@@ -302,7 +302,7 @@ export const ClusterPage = () => {
         <div>
           <h1 className="page-title">
             <Network size={22} color="var(--accent-primary)" />
-            Phase 4: Distributed Raft Consensus & Redis Protocol
+            Distributed Raft Consensus & Redis Wire Protocol
           </h1>
           <p className="page-subtitle">
             Enterprise 3-node Raft state machine, 32-bit consistent hashing ring sharding, and native RESP3 wire protocol over TCP port 6379.

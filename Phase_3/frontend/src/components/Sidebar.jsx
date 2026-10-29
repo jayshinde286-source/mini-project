@@ -22,7 +22,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'events', label: 'Event Stream', icon: Radio, badge: metrics.activeEvents },
     { id: 'persistence', label: 'Persistence (WAL)', icon: HardDrive, badge: walRecords.length },
     { id: 'recovery', label: 'Recovery', icon: RotateCcw },
-    { id: 'cluster', label: 'Cluster (Phase 4)', icon: Network, badge: 'Raft' },
+    { id: 'cluster', label: 'Distributed Cluster', icon: Network, badge: 'Raft' },
     { id: 'metrics', label: 'Metrics & Stats', icon: BarChart3 },
     { id: 'audit', label: 'Audit Logs', icon: FileText }
   ];
@@ -64,7 +64,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
             SPIT Cache Module
           </div>
           <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
-            Phase II Evaluation
+            Enterprise Architecture
           </div>
         </div>
       </div>

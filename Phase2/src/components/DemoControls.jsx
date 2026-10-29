@@ -63,10 +63,7 @@ export const DemoControls = ({ onOpenSetModal, onOpenGetModal }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <Sparkles size={16} color="var(--accent-primary)" />
         <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-          Interactive Demo Controls
-        </span>
-        <span className="badge badge-indigo" style={{ fontSize: '0.675rem' }}>
-          Viva Shortcuts
+          Engine Operations & Workload Generator
         </span>
       </div>
 

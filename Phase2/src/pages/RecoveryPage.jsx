@@ -283,7 +283,7 @@ export const RecoveryPage = () => {
                 RecoveryReport Diagnostic Evidence
               </div>
               <div className="card-description">
-                Direct evidence matching edu.spit.cache.persistence.RecoveryReport for viva evaluation
+                Direct evidence matching edu.spit.cache.persistence.RecoveryReport for recovery verification
               </div>
             </div>
             <span className="badge badge-green">BATCH INTEGRITY PASS</span>

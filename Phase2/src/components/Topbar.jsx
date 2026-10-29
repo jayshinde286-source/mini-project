@@ -239,7 +239,7 @@ export const Topbar = ({ onOpenCommandPalette, onOpenShortcuts }) => {
                 borderRadius: 'var(--radius-sm)',
                 border: '1px dashed var(--border-default)'
               }}>
-                <strong>Project:</strong> Persistent Event-Driven Memory Cache Module. Zero external runtime dependencies in core engine. Java 17 + exclusive WAL writer lock + CRC32 verification + React Phase II & III UI demonstration.
+                <strong>Project:</strong> Persistent Event-Driven Memory Cache Module. Zero external runtime dependencies in core engine. Java 17 + exclusive WAL writer lock + CRC32 verification + React Web Console & Telemetry.
               </div>
             </div>
             <div className="modal-footer">

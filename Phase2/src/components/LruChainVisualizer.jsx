@@ -266,7 +266,7 @@ export const LruChainVisualizer = () => {
         </div>
       </div>
 
-      {/* Theoretical Mechanical Note for Professor Evaluation */}
+      {/* Theoretical Mechanical Note */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -279,7 +279,7 @@ export const LruChainVisualizer = () => {
         border: '1px dashed rgba(99, 102, 241, 0.2)'
       }}>
         <span>
-          💡 <strong>Viva Theory:</strong> Splicing requires 4 pointer updates: <code>node.prev.next = node.next; node.next.prev = node.prev; node.next = head.next; head.next = node;</code>
+          💡 <strong>Algorithm Design:</strong> O(1) DLL splicing requires 4 pointer updates: <code>node.prev.next = node.next; node.next.prev = node.prev; node.next = head.next; head.next = node;</code>
         </span>
         <span style={{ fontWeight: 600, color: 'var(--accent-indigo)' }}>
           Strict O(1) Guarantee

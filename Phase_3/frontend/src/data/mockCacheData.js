@@ -1,5 +1,5 @@
 /**
- * Realistic initial cache entries for Phase II demonstration
+ * Realistic initial cache entries for system demonstration
  * Matches edu.spit.cache.core.CacheEntry
  */
 
