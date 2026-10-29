@@ -165,9 +165,9 @@ Exposes the append-only JSON Lines compliance stream matching `edu.spit.cache.ev
 
 ---
 
-## 5. Professor Viva Evaluation Walkthrough Guide
+## 5. System Operational Verification Walkthrough Guide
 
-The topbar includes a **"Viva Demo Flow"** button with a 10-step scripted presentation:
+Step-by-step verification flow for demonstration:
 1. **Overview**: Explain the architecture and health grid on the Dashboard.
 2. **SET Entry**: Insert `student:jay` = `CSE_B3` with 60s TTL. Show entry created in the table and WAL record committed.
 3. **GET Hit**: Query `student:jay`. Show the green `CACHE HIT` card with version and access count.
