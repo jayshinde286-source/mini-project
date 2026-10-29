@@ -17,6 +17,8 @@ import { EventBus, EventType } from './events/EventBus.js';
 import { AuditLogger } from './audit/AuditLogger.js';
 import { SecurityGuard } from './security/SecurityGuard.js';
 import { RateLimiter } from './security/RateLimiter.js';
+import { ClusterCoordinator } from './cluster/ClusterCoordinator.js';
+import { RespServer } from './cluster/RespServer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -88,6 +90,20 @@ const engine = new CacheEngine({
 });
 
 const recoveryManager = new RecoveryManager(engine, walManager, snapshotStore, eventBus);
+
+// Phase 4: Raft Distributed Consensus Cluster & Redis RESP3 Wire Protocol
+const clusterCoordinator = new ClusterCoordinator({
+  eventBus,
+  cacheEngine: engine
+});
+
+const respServer = new RespServer({
+  port: 6379,
+  host: '0.0.0.0',
+  cacheEngine: engine,
+  clusterCoordinator
+});
+respServer.start().catch((err) => console.warn('RESP Server warning:', err.message));
 
 // Cold boot recovery check
 console.log('⚡ SPIT Cache Module: Initiating cold boot recovery check...');
@@ -526,6 +542,71 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, healthCertificate, rateHeaders);
     }
 
+    // === Phase 4: Raft Distributed Clustering & RESP3 Endpoints ===
+
+    // 21. Raft Cluster Status
+    if (pathname === '/api/cluster/status' && method === 'GET') {
+      const status = clusterCoordinator.getStatus();
+      return sendJson(res, 200, status, rateHeaders);
+    }
+
+    // 22. Consistent Hash Ring Topology
+    if (pathname === '/api/cluster/ring' && method === 'GET') {
+      const ring = clusterCoordinator.getRingTopology();
+      return sendJson(res, 200, ring, rateHeaders);
+    }
+
+    // 23. Consistent Hash Ring Key Route Lookup
+    if (pathname.startsWith('/api/cluster/route/') && method === 'GET') {
+      const rawKey = decodeURIComponent(pathname.replace('/api/cluster/route/', ''));
+      const routeInfo = clusterCoordinator.routeKey(rawKey);
+      return sendJson(res, 200, routeInfo, rateHeaders);
+    }
+
+    // 24. Replicated Distributed Write (Raft Quorum)
+    if (pathname === '/api/cluster/write' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      if (!body.key) {
+        return sendJson(res, 400, { error: 'Field "key" is required' }, rateHeaders);
+      }
+      const writeResult = clusterCoordinator.replicateWrite({
+        op: body.op || 'SET',
+        key: body.key,
+        value: body.value,
+        ttl: body.ttl || 60
+      });
+      return sendJson(res, 200, writeResult, rateHeaders);
+    }
+
+    // 25. Chaos: Network Partition Simulation
+    if (pathname === '/api/cluster/chaos/partition' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const nodeId = body.nodeId || 'node-1';
+      const result = clusterCoordinator.simulatePartition(nodeId);
+      return sendJson(res, 200, result, rateHeaders);
+    }
+
+    // 26. Chaos: Heal Network Partition
+    if (pathname === '/api/cluster/chaos/heal' && method === 'POST') {
+      const body = await parseJsonBody(req).catch(() => ({}));
+      const result = clusterCoordinator.healPartition(body.nodeId || null);
+      return sendJson(res, 200, result, rateHeaders);
+    }
+
+    // 27. Chaos: Trigger Raft Leader Election
+    if (pathname === '/api/cluster/chaos/trigger-election' && method === 'POST') {
+      const body = await parseJsonBody(req);
+      const nodeId = body.nodeId || 'node-2';
+      const result = clusterCoordinator.triggerElection(nodeId);
+      return sendJson(res, 200, result, rateHeaders);
+    }
+
+    // 28. Redis RESP Wire Protocol Status
+    if (pathname === '/api/cluster/resp/status' && method === 'GET') {
+      const status = respServer.getStatus();
+      return sendJson(res, 200, status, rateHeaders);
+    }
+
     // 404 Route Not Found
     return sendJson(res, 404, { error: 'Route not found', path: pathname }, rateHeaders);
   } catch (err) {
@@ -559,6 +640,8 @@ process.on('unhandledRejection', (reason) => {
 const handleGracefulShutdown = (signal) => {
   console.log(`\n🛑 Received ${signal}. Executing graceful shutdown...`);
   try {
+    respServer.stop().catch(() => {});
+    clusterCoordinator.destroy();
     walManager.close();
     engine.destroy();
     rateLimiter.destroy();
@@ -587,4 +670,4 @@ server.listen(PORT, HOST, () => {
   console.log(`🛡️ Security Guard Active: Strict Input Validation, POSIX 0o600, SHA-256 Chaining & IP Rate Limiting`);
 });
 
-export { server, engine, walManager, snapshotStore, recoveryManager, eventBus, auditLogger, rateLimiter };
+export { server, engine, walManager, snapshotStore, recoveryManager, eventBus, auditLogger, rateLimiter, clusterCoordinator, respServer };

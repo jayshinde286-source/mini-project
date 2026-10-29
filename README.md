@@ -75,9 +75,10 @@ Open **`http://localhost:3000`** in any web browser.
 
 | Academic Phase | Marks | Status | Primary Documentation & Folder |
 |---|---|---|---|
-| **Phase 1: Core Engine** | — | Completed | [`phase-1/`](file:///Users/jayshinde/Documents/mini%20project/phase-1) — Java 17 In-Memory Cache Core |
-| **Phase 2: Architecture & Design** | **25 Marks** | **100% Complete** | [`Phase2/`](file:///Users/jayshinde/Documents/mini%20project/Phase2) — [SRS.md (10M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/SRS.md) • [UML Diagrams (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/UML_DIAGRAMS.md) • [Algorithm Design (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase2/ALGORITHM_DESIGN.md) • [Feature Docs](file:///Users/jayshinde/Documents/mini%20project/Phase2/PHASE_2_FEATURE_DOCUMENTATION.md) • Web Console |
-| **Phase 3: Implementation** | **25 Marks** | **100% Complete** | [`Phase_3/`](file:///Users/jayshinde/Documents/mini%20project/Phase_3) — [Module Coding (10M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/backend) • [Git Setup (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/README.md) • [Branching Strategy (5M)](file:///Users/jayshinde/Documents/mini%20project/Phase_3/README.md) • [40 Viva Q&A](file:///Users/jayshinde/Documents/mini%20project/Phase_3/PROJECT_DOCUMENTATION.md) • [100 Technical Q&A](file:///Users/jayshinde/Documents/mini%20project/Phase_3/PROJECT_VIVA_100_QA.md) • [Phase 4 Roadmap PDF](file:///Users/jayshinde/Documents/mini%20project/Phase_3/Phase_4_Roadmap.pdf) |
+| **Phase 1: Core Engine** | — | Completed | [`phase-1/`](phase-1) — Java 17 In-Memory Cache Core |
+| **Phase 2: Architecture & Design** | **25 Marks** | **100% Complete** | [`Phase2/`](Phase2) — [SRS.md (10M)](Phase2/SRS.md) • [UML Diagrams (5M)](Phase2/UML_DIAGRAMS.md) • [Algorithm Design (5M)](Phase2/ALGORITHM_DESIGN.md) • [Feature Docs](Phase2/PHASE_2_FEATURE_DOCUMENTATION.md) • Web Console |
+| **Phase 3: Implementation** | **25 Marks** | **100% Complete** | [`Phase_3/`](Phase_3) — [Module Coding (10M)](Phase_3/backend) • [Git Setup (5M)](Phase_3/README.md) • [Branching Strategy (5M)](Phase_3/README.md) • [40 Viva Q&A](Phase_3/PROJECT_DOCUMENTATION.md) • [100 Technical Q&A](Phase_3/PROJECT_VIVA_100_QA.md) • [Phase 4 Roadmap PDF](Phase_3/Phase_4_Roadmap.pdf) |
+| **Phase 4: Distributed Clustering** | **Distinction** | **100% Complete** | [`Phase_3/backend/src/cluster/`](Phase_3/backend/src/cluster) — 3-Node Raft Consensus • 32-bit Consistent Hash Ring • Redis RESP3 Wire Protocol (`:6379`) • Chaos Sandbox • [Phase 4 Tests](Phase_3/tests/test_phase4.js) |
 
 ---
 
@@ -142,9 +143,28 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for ownership and dep
 
 ## Requirements
 
-- JDK 17 or newer
-- `make` for the shortest commands; Maven is optional
-- No database, server, framework, or external Java dependency
+- JDK 17 or newer (Phase 1)
+- Node.js v18+ (Phase 2, 3 & 4)
+- No external runtime databases or Redis dependencies — all engines, Raft algorithms, and wire decoders are implemented natively.
+
+## Phase 4: Distributed Raft Consensus & Redis RESP3 Wire Protocol
+
+- **3-Node Raft Consensus State Machine** ([`Phase_3/backend/src/cluster/RaftNode.js`](Phase_3/backend/src/cluster/RaftNode.js)):
+  - Roles: `FOLLOWER`, `CANDIDATE`, `LEADER` with terms, randomized jittered election timers (600ms), and 200ms heartbeat broadcasts.
+  - Quorum-guaranteed log replication ($Q = \lfloor N/2 \rfloor + 1$) ensuring zero dirty writes or lost commits.
+- **Consistent Hash Ring Sharding** ([`Phase_3/backend/src/cluster/ConsistentHashRing.js`](Phase_3/backend/src/cluster/ConsistentHashRing.js)):
+  - 32-bit MD5 deterministic hash ring with 128 virtual nodes per physical node (384 total slots).
+  - $O(\log V)$ binary search key lookup with seamless key rebalancing upon node changes.
+- **Native Redis RESP3 TCP Wire Server** ([`Phase_3/backend/src/cluster/RespServer.js`](Phase_3/backend/src/cluster/RespServer.js)):
+  - Pure Node.js `net.createServer()` listening on TCP port `6379`.
+  - Wire compatible with standard `redis-cli`, `ioredis`, and Python `redis-py` for `PING`, `SET`, `GET`, `DEL`, `EXISTS`, `DBSIZE`, `INFO`, and `CLUSTER NODES`.
+- **Chaos Engineering Sandbox & Interactive Dashboard** ([`Phase2/src/pages/ClusterPage.jsx`](Phase2/src/pages/ClusterPage.jsx)):
+  - Live visual topology showing node states, live terms, commit indexes, and heartbeat indicators.
+  - Interactive fault injection: simulate split-brain partitions, test automated failover elections, and heal partitions with live state reconciliation.
+  - Built-in Redis terminal runner with real-time TCP command execution.
+- **Automated Verification Harness** ([`Phase_3/tests/test_phase4.js`](Phase_3/tests/test_phase4.js)):
+  - 8/8 comprehensive automated unit and integration tests passing with 100% success.
+
 
 ## Build, test, package and run
 

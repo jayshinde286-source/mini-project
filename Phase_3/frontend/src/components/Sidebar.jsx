@@ -8,7 +8,8 @@ import {
   BarChart3,
   FileText,
   ShieldCheck,
-  Server
+  Server,
+  Network
 } from 'lucide-react';
 import { useCache } from '../context/CacheContext';
 
@@ -21,6 +22,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'events', label: 'Event Stream', icon: Radio, badge: metrics.activeEvents },
     { id: 'persistence', label: 'Persistence (WAL)', icon: HardDrive, badge: walRecords.length },
     { id: 'recovery', label: 'Recovery', icon: RotateCcw },
+    { id: 'cluster', label: 'Cluster (Phase 4)', icon: Network, badge: 'Raft' },
     { id: 'metrics', label: 'Metrics & Stats', icon: BarChart3 },
     { id: 'audit', label: 'Audit Logs', icon: FileText }
   ];

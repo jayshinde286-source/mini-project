@@ -17,6 +17,7 @@ import { PersistencePage } from './pages/PersistencePage';
 import { RecoveryPage } from './pages/RecoveryPage';
 import { MetricsPage } from './pages/MetricsPage';
 import { AuditPage } from './pages/AuditPage';
+import { ClusterPage } from './pages/ClusterPage';
 
 export const MainDashboardApp = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -66,6 +67,8 @@ export const MainDashboardApp = () => {
         setActiveTab('metrics');
       } else if (e.key === '7') {
         setActiveTab('audit');
+      } else if (e.key === '8') {
+        setActiveTab('cluster');
       }
     };
 
@@ -110,6 +113,8 @@ export const MainDashboardApp = () => {
           {activeTab === 'persistence' && <PersistencePage />}
 
           {activeTab === 'recovery' && <RecoveryPage />}
+
+          {activeTab === 'cluster' && <ClusterPage />}
 
           {activeTab === 'metrics' && <MetricsPage />}
 
