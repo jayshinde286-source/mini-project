@@ -16,7 +16,7 @@
 6. [Git Repository Setup, Branching Strategy & Commit Conventions](#6-git-repository-setup-branching-strategy--commit-conventions)
 7. [Installation, Setup & Execution Guide](#7-installation-setup--execution-guide)
 8. [Automated Verification & Test Execution](#8-automated-verification--test-execution)
-9. [40 Project-Specific Viva Questions & Detailed Answers](#9-40-project-specific-viva-questions--detailed-answers)
+9. [Frequently Asked Technical Questions & Architecture Deep-Dive](#9-frequently-asked-technical-questions--architecture-deep-dive)
 
 ---
 
@@ -279,7 +279,7 @@ node Phase_3/tests/run_tests.js
 
 ---
 
-## 9. 40 Project-Specific Viva Questions & Detailed Answers
+## 9. Frequently Asked Technical Questions & Architecture Deep-Dive
 
 ### Architectural Foundations & Algorithmic Design
 **Q1: What is the primary problem that the SPIT Cache Module solves?**  
@@ -407,7 +407,7 @@ node Phase_3/tests/run_tests.js
 
 ---
 
-### Academic Viva & Evaluation Context
+### Architectural Standards & Evaluation Context
 **Q36: Which Course Outcomes (CO) does this Mini Project satisfy?**  
 *Answer:* It satisfies COs related to Data Structures & Algorithms (advanced doubly-linked lists and hash indexing), Operating Systems & File Systems (file channels, fsync, buffering, crash recovery), and Software Engineering (modular design patterns, UML modeling, automated testing).
 
