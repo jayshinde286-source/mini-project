@@ -181,7 +181,7 @@ mini-project/
 ├── Phase2/                         # Modern React Web Management Console
 │   ├── src/
 │   │   ├── components/             # Reusable UI components & visualizers
-│   │   ├── pages/                  # Dashboard, Cache, WAL, Cluster, Metrics pages
+│   │   ├── pages/                  # Dashboard, Cache, Events, Persistence, Recovery, Metrics, Audit pages
 │   │   └── context/                # CacheContext state provider
 │   └── dist/                       # Pre-compiled static production assets
 ├── Phase_3/                        # Enterprise Backend & Engine Core
